@@ -1,0 +1,12 @@
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.dialogs {
+  margin-right: 1.5em;
+}

@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 18px;
+  height: 12vmax;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.container:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.3);
+  -webkit-transform: scale(1.01, 1.01);
+  transform: scale(1.01, 1.01);
+}
+
+.container img {
+  margin-right: 18px;
+  border-radius: 8px;
+}
+
+.container a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.topWrapper {
+  display: flex;
+}
+
+.title {
+  margin: 4px 0;
+}
+
+.text {
+  margin-top: 0;
+}

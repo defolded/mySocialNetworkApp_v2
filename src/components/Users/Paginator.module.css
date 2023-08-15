@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.container button {
+  margin: 0 10px;
+}
+
+.pagination span {
+  font-size: 18px;
+  padding: 8px 16px;
+  margin: 0 7px;
+  text-decoration: none;
+  -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.pagination span:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.3);
+  -webkit-transform: scale(1.01, 1.01);
+  transform: scale(1.01, 1.01);
+}
+
+.pagination span.active {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+.pagination span:hover:not(.active) {
+  background-color: #d4d5d2;
+  border-radius: 6px;
+}
+
+.container button {
+  opacity: 60%;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
+  font-size: 14;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.75;
+  min-height: 28px;
+  padding: calc(0.475rem - 1px) calc(0.9rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.container button:hover,
+.container button:focus {
+  opacity: 100%;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.container button:hover {
+  opacity: 100%;
+  transform: translateY(-1px);
+}
+
+.container button:active {
+  opacity: 100%;
+  background-color: #f0f0f1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}

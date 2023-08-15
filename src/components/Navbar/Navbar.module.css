@@ -1,0 +1,117 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 1rem;
+  flex: 1;
+  margin: 10px;
+  max-width: 30%;
+  font-size: large;
+  font-weight: 400;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  position: fixed;
+  margin-top: 30vh;
+}
+
+.nav:first-child {
+  margin-right: 10px;
+}
+
+.nav img {
+  width: 80px;
+  height: 80px;
+}
+
+.profile {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.profile a {
+  text-decoration: none;
+}
+
+.profile a:link {
+  color: black;
+}
+
+.profile a:visited {
+  color: black;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuItems a {
+  margin: 10px 0;
+  opacity: 60%;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  padding-bottom: 2px;
+}
+
+/* Links animation */
+.menuItems a:hover {
+  opacity: 100%;
+}
+
+.menuItems a {
+  display: block;
+  position: relative;
+  color: black;
+}
+
+.menuItems a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  transform-origin: bottom right;
+  transition: transform 0.15s ease-out;
+}
+
+.menuItems a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Media Queries */
+@media screen and (max-width: 512px) {
+  .nav {
+    padding-right: 0;
+  }
+
+  .wrapper {
+    font-size: small;
+    font-weight: 300;
+  }
+
+  .menu {
+    align-items: flex-end;
+  }
+
+  .nav a {
+    margin: 0;
+  }
+
+  .nav img {
+    width: 50px;
+    height: 50px;
+  }
+}
