@@ -2,8 +2,27 @@ import React, { useState } from "react";
 import EditProfile from "./EditProfile";
 import ShowProfile from "./ShowProfile";
 import Preloader from "../../common/Preloader/Preloader";
+import { ContactsType, ProfileType } from "../../../types/types";
 
-const Profile = (props) => {
+interface PropsType {
+  userId: number
+  loggedUser: number
+  isFetching: boolean
+  profile: ProfileType
+  userPhotoLarge: any
+  userName: string
+  aboutMe: string
+  lookingForAJob: boolean
+  lookingForAJobDescription: string
+  contacts: ContactsType
+  status: string
+
+  sendProfile: (O: ProfileType) => Promise<any>
+  setUserStatus: (t: string) => void
+  uploadPhoto: (file: File) => void
+}
+
+const Profile:React.FC<PropsType> = (props) => {
   const [editMode, setEditMode] = useState(false);
 
   const toggleEditMode = () => {
@@ -12,7 +31,7 @@ const Profile = (props) => {
 
   let isAuth = props.userId === props.loggedUser;
 
-  const onSubmit = (formData) => {
+  const onSubmit = (formData: any) => {
     props.sendProfile(formData).then(() => toggleEditMode());
   };
 
@@ -25,16 +44,12 @@ const Profile = (props) => {
       {editMode ? (
         <EditProfile
           initialValues={props.profile}
-          toggleEditMode={toggleEditMode}
           isAuth={isAuth}
           userPhotoLarge={props.userPhotoLarge}
-          userName={props.userName}
-          aboutMe={props.aboutMe}
-          lookingForAJobDescription={props.lookingForAJobDescription}
           onSubmit={onSubmit}
-          contacts={props.contacts}
           status={props.status}
           setUserStatus={props.setUserStatus}
+          uploadPhoto={props.uploadPhoto}
         />
       ) : (
         <ShowProfile
@@ -43,6 +58,7 @@ const Profile = (props) => {
           userPhotoLarge={props.userPhotoLarge}
           userName={props.userName}
           aboutMe={props.aboutMe}
+          lookingForAJob={props.lookingForAJob}
           lookingForAJobDescription={props.lookingForAJobDescription}
           contacts={props.contacts}
           status={props.status}

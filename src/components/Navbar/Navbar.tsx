@@ -1,8 +1,15 @@
-import React from "react";
-import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
+import styles from "./Navbar.module.css";
 
-const Navbar = (props) => {
+interface PropsType {
+  userId: number
+  login: string
+  isAuth: boolean
+
+  logout: () => void
+}
+
+const Navbar:React.FC<PropsType> = (props) => {
   return (
     <div className={styles.nav}>
       <div className={styles.wrapper}>

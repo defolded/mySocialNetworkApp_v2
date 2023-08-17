@@ -3,8 +3,17 @@ import Navbar from "./Navbar";
 import { connect } from "react-redux";
 import { getAuthUserData, logout } from "../../redux/authReducer";
 import { compose } from "redux";
+import { AppStateType } from "../../redux/redux-store";
 
-class NavbarContainer extends React.Component {
+interface PropsType {
+  userId: number
+  login: string
+  isAuth: boolean
+
+  logout: () => void
+}
+
+class NavbarContainer extends React.Component<PropsType> {
   render() {
     return (
       <Navbar
@@ -17,12 +26,12 @@ class NavbarContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
   isAuth: state.auth.isAuth,
   login: state.auth.login,
   userId: state.auth.userId,
 });
 
-export default compose(connect(mapStateToProps, { getAuthUserData, logout }))(
+export default compose<any>(connect(mapStateToProps, { getAuthUserData, logout }))(
   NavbarContainer
 );

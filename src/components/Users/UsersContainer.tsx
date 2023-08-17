@@ -1,15 +1,14 @@
-import {
-  getUsers,
-  follow,
-  unfollow,
-} from "../../redux/usersReducer";
-import { connect } from "react-redux";
 import React from "react";
-import Users from "./Users";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { connect } from "react-redux";
 import { compose } from "redux";
 import { AppStateType } from "../../redux/redux-store";
+import {
+  follow,
+  getUsers,
+  unfollow,
+} from "../../redux/usersReducer";
 import { UserType } from "../../types/types";
+import Users from "./Users";
 
 
 interface MapStateToPropsType {
@@ -76,5 +75,4 @@ export default compose<any>(
     follow,
     unfollow,
   }),
-  withAuthRedirect
 )(UsersAPIComponent);

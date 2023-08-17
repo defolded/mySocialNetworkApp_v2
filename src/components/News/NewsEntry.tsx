@@ -2,7 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./NewsEntry.module.css";
 
-const NewsEntry = (props) => {
+interface PropsType {
+  url: string
+  urlToImage: string
+  title: string
+  description: string
+}
+
+const NewsEntry:React.FC<PropsType> = (props) => {
   return (
     <div className={styles.container}>
       <Link to={props.url}>

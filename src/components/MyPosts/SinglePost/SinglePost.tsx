@@ -1,7 +1,12 @@
-import React from "react";
 import styles from "./SinglePost.module.css";
 
-const MyPost = (props) => {
+interface PropsType {
+  profilePicture: string | undefined
+  username: string
+  text: string
+}
+
+const MyPost:React.FC<PropsType> = (props) => {
   return (
     <div className={styles.wrapper}>
       <div>

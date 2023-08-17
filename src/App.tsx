@@ -1,19 +1,26 @@
 import React from "react";
+import { connect } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { compose } from "redux";
 import "./App.css";
+import LoginContainer from "./components/Login/LoginContainer";
 import MessagesContainer from "./components/Messages/MessagesContainer";
 import MyPostsContainer from "./components/MyPosts/MyPostsContainer";
-import UsersContainer from "./components/Users/UsersContainer";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
-import LoginContainer from "./components/Login/LoginContainer";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { initializeApp } from "./redux/appReducer";
-import ProfileContainer from "./components/Users/Profile/ProfileContainer";
 import NewsContainer from "./components/News/NewsContainer";
+import ProfileContainer from "./components/Users/Profile/ProfileContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 import Preloader from "./components/common/Preloader/Preloader";
+import { initializeApp } from "./redux/appReducer";
+import { AppStateType } from "./redux/redux-store";
 
-class App extends React.Component {
+type MapPropsType = ReturnType<typeof mapStateToProps>
+
+type DispatchPropsType = { 
+  initializeApp: () => void
+}
+
+class App extends React.Component<MapPropsType & DispatchPropsType> {
   componentDidMount() {
     this.props.initializeApp();
   }
@@ -26,33 +33,33 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <NavbarContainer store={this.props.store} />
+          <NavbarContainer state={this.props.state} />
           <div className="Content">
             <div className="Wrapper">
               <Routes>
                 <Route
                   path="/posts"
-                  element={<MyPostsContainer store={this.props.store} />}
+                  element={<MyPostsContainer state={this.props.state} />}
                 />
                 <Route
                   path="/messages/*"
-                  element={<MessagesContainer store={this.props.store} />}
+                  element={<MessagesContainer state={this.props.state} />}
                 />
                 <Route
                   path="/news"
-                  element={<NewsContainer store={this.props.store} />}
+                  element={<NewsContainer state={this.props.state} />}
                 />
                 <Route
                   path="/users"
-                  element={<UsersContainer store={this.props.store} />}
+                  element={<UsersContainer state={this.props.state} />}
                 />
                 <Route
                   path="/users/:userId"
-                  element={<ProfileContainer store={this.props.store} />}
+                  element={<ProfileContainer state={this.props.state} />}
                 />
                 <Route
                   path="/login"
-                  element={<LoginContainer store={this.props.store} />}
+                  element={<LoginContainer state={this.props.state} />}
                 />
               </Routes>
             </div>
@@ -63,8 +70,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
   init: state.app.init,
+  state
 });
 
 export default compose(connect(mapStateToProps, { initializeApp })(App));

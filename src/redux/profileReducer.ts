@@ -1,12 +1,7 @@
 import { stopSubmit } from "redux-form";
-import { profileAPI } from "../api/api";
+import { profileAPI } from "../api/profileApi";
 import { PhotosType, ProfileType } from "../types/types";
-
-const SET_PROFILE = "SET-PROFILE";
-const SET_STATUS = "SET-STATUS";
-const UPLOAD_PHOTO = "UPLOAD-PHOTO";
-const SEND_PROFILE = "SEND-PROFILE";
-const TOGGLE_FETCHING = "TOGGLE-FETCHING";
+import { InferActionsTypes, ThunkTypeProto } from "./redux-store";
 
 let initialState = {
   profile: null as ProfileType | null,
@@ -15,26 +10,27 @@ let initialState = {
 };
 
 type InitialStateType = typeof initialState
+type ActionTypes = InferActionsTypes<typeof actions>
 
 const usersReducer = (state = initialState, action: any):InitialStateType => {
   switch (action.type) {
-    case SET_PROFILE:
+    case "SN/PROFILE/SET-PROFILE":
       return {
         ...state,
         profile: action.profile,
       };
-    case SET_STATUS:
+    case "SN/PROFILE/SET-STATUS":
       return {
         ...state,
         status: action.status,
       };
-    case UPLOAD_PHOTO:
+    case "SN/PROFILE/UPLOAD-PHOTO":
       return {
         ...state,
         // @ts-ignore
         profile: { ...state.profile, photos: action.photo},
       };
-    case TOGGLE_FETCHING:
+    case "SN/PROFILE/TOGGLE-FETCHING":
       return {
         ...state,
         isFetching: action.state,
@@ -44,84 +40,50 @@ const usersReducer = (state = initialState, action: any):InitialStateType => {
   }
 };
 
-interface SetProfileType {
-  type: typeof SET_PROFILE
-  profile: ProfileType
+const actions = {
+  setProfile: (profile: ProfileType) => ({ type: "SN/PROFILE/SET-PROFILE", profile } as const),
+  setStatus: (status: string) => ({ type: "SN/PROFILE/SET-STATUS", status } as const),
+  uploadPhotoSuccess: (photo: PhotosType) => ({ type: "SN/PROFILE/UPLOAD-PHOTO", photo } as const),
+  sendProfileSuccess: () => ({ type: "SN/PROFILE/SEND-PROFILE" } as const),
+  toggleIsFetchingSuccess: (state: boolean) => ({ type: "SN/PROFILE/TOGGLE-FETCHING", state } as const),
 }
 
-export const setProfile = (profile: ProfileType):SetProfileType => ({
-  type: SET_PROFILE,
-  profile,
-});
-
-interface SetStatusType {
-  type: typeof SET_STATUS
-  status: string
-}
-
-export const setStatus = (status: string):SetStatusType => ({
-  type: SET_STATUS,
-  status,
-});
-
-interface UploadPhotoSuccessType {
-  type: typeof UPLOAD_PHOTO
-  photo: PhotosType
-}
-
-export const uploadPhotoSuccess = (photo: PhotosType):UploadPhotoSuccessType => ({
-  type: UPLOAD_PHOTO,
-  photo,
-});
-
-interface SendProfileSuccessType {
-  type: typeof SEND_PROFILE
-}
-
-export const sendProfileSuccess = ():SendProfileSuccessType => ({ type: SEND_PROFILE });
-
-interface ToggleIsFetchingSuccessType {
-  type: typeof TOGGLE_FETCHING
-  state: boolean
-}
-
-export const toggleIsFetchingSuccess = (state: boolean):ToggleIsFetchingSuccessType => ({
-  type: TOGGLE_FETCHING,
-  state,
-});
-
-export const getProfile = (profileId: number) => async (dispatch: any) => {
-  dispatch(toggleIsFetchingSuccess(true));
+export const getProfile = (profileId: number):ThunkTypeProto<ActionTypes> => async (dispatch) => {
+  dispatch(actions.toggleIsFetchingSuccess(true));
   let res = await profileAPI.getProfile(profileId);
-  dispatch(setProfile(res));
-  dispatch(toggleIsFetchingSuccess(false));
+  dispatch(actions.setProfile(res));
+  dispatch(actions.toggleIsFetchingSuccess(false));
 };
 
-export const getUserStatus = (profileId: number) => async (dispatch: any) => {
+export const getUserStatus = (profileId: number):ThunkTypeProto<ActionTypes> => async (dispatch) => {
   let res = await profileAPI.getStatus(profileId);
-  dispatch(setStatus(res.data));
+  dispatch(actions.setStatus(res.data));
 };
 
-export const setUserStatus = (status: string) => async (dispatch: any) => {
+export const setUserStatus = (status: string):ThunkTypeProto<ActionTypes> => async (dispatch) => {
   let res = await profileAPI.updateStatus(status);
   if (res.data.resultCode === 0) {
-    dispatch(setStatus(status));
+    dispatch(actions.setStatus(status));
   }
 };
 
-export const uploadPhoto = (photo: PhotosType) => async (dispatch: any) => {
+export const uploadPhoto = (photo: PhotosType):ThunkTypeProto<ActionTypes> => async (dispatch) => {
   let res = await profileAPI.uploadPhoto(photo);
   if (res.data.resultCode === 0) {
-    dispatch(uploadPhotoSuccess(res.data.data.photos));
+    dispatch(actions.uploadPhotoSuccess(res.data.data.photos));
   }
 };
 
-export const sendProfile = (profile: ProfileType) => async (dispatch: any, getState: any) => {
+export const sendProfile = (profile: ProfileType):ThunkTypeProto<ActionTypes> => async (dispatch, getState) => {
   const userId = getState().auth.userId;
 
   let res = await profileAPI.sendProfile(profile);
   if (res.data.resultCode === 0) {
-    dispatch(getProfile(userId));
+    if (userId !== null ) { 
+      dispatch(getProfile(userId));
+    } else {
+      throw new Error("userId can't be null");
+    }
   } 
   else {
     dispatch(

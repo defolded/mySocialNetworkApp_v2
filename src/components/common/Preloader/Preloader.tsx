@@ -1,7 +1,11 @@
 import React from "react";
 import styles from "./Preloader.module.css";
 
-const Preloader = () => {
+interface PropsType {
+  
+}
+
+const Preloader:React.FC<PropsType> = () => {
   return (
     <div className={styles.wrapper}>
       <svg

@@ -1,18 +1,16 @@
 import { getAuthUserData } from "./authReducer";
+import { InferActionsTypes, ThunkTypeProto } from "./redux-store";
 
-const SET_INIT = "SET-INIT";
-
-interface InitialStateType {
-  init: boolean
-}
-
-let initialState:InitialStateType = {
+let initialState = {
   init: false,
 };
 
-const appReducer = (state = initialState, action: any):InitialStateType => {
+type InitialStateType = typeof initialState
+type ActionTypes = InferActionsTypes<typeof actions>
+
+const appReducer = (state = initialState, action: ActionTypes):InitialStateType => {
   switch (action.type) {
-    case SET_INIT:
+    case "SN/APP/SET-INIT":
       return {
         ...state,
         init: true,
@@ -22,15 +20,13 @@ const appReducer = (state = initialState, action: any):InitialStateType => {
   }
 };
 
-interface InitSuccessActionType {
-  type: typeof SET_INIT
+export const actions = {
+  initSuccess: () => ({ type: "SN/APP/SET-INIT" } as const),
 }
 
-export const initSuccess = ():InitSuccessActionType => ({ type: SET_INIT });
-
-export const initializeApp = () => async (dispatch: any) => {
+export const initializeApp = ():ThunkTypeProto<ActionTypes> => async (dispatch) => {
   await dispatch(getAuthUserData());
-  dispatch(initSuccess());
+  dispatch(actions.initSuccess());
 };
 
 export default appReducer;

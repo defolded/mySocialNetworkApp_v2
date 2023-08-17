@@ -1,11 +1,11 @@
 import React from "react";
 import userPhoto from "../../assets/profile-picture.jpg";
-import User from "./User";
-import Paginator from "./Paginator";
-import styles from "./Users.module.css";
 import { UserType } from "../../types/types";
+import Paginator from "./Paginator";
+import User from "./User";
+import styles from "./Users.module.css";
 
-interface Props {
+interface PropsType {
   page: number
   totalUsersCount: number
   pageSize: number
@@ -18,7 +18,7 @@ interface Props {
   setCurrentPage: (arg0: number) => void
 }
 
-const Users = (props: Props) => {
+const Users:React.FC<PropsType> = (props) => {
   const followUser = (userId: number) => {
     props.follow(userId);
   };

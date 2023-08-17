@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 interface PropsType {
   status: string
@@ -9,7 +9,7 @@ interface PropsType {
 
 interface StateType {
   status: string
-  editMode: boolean
+  editMode?: boolean
 }
 
 const ProfileInfo = (props: PropsType & StateType) => {

@@ -11,8 +11,13 @@ import {
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import styles from "./Profile.module.css";
+import { ContactsType } from "../../../types/types";
 
-const SocialMediaIcons = ({ contacts }) => {
+interface PropsType {
+  contacts: ContactsType
+}
+
+const SocialMediaIcons:React.FC<PropsType> = ({ contacts }) => {
   return (
     <IconContext.Provider value={{ color: "black", size: "1.4em" }}>
       <div className={styles.contacts}>

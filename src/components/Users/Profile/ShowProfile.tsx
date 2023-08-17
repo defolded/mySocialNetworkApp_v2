@@ -3,8 +3,23 @@ import ProfileInfo from "./ProfileInfo";
 import styles from "./Profile.module.css";
 import SocialMediaIcons from "./SocialMediaIcons";
 import userPhoto from "../../../assets/profile-picture.jpg";
+import { ContactsType } from "../../../types/types";
 
-const ShowProfile = (props) => {
+interface PropsType {
+  isAuth: boolean
+  userPhotoLarge: string | null
+  userName: string
+  lookingForAJob: boolean
+  status: string
+  aboutMe: string
+  lookingForAJobDescription: string
+  contacts: ContactsType
+
+  toggleEditMode: () => void
+  setUserStatus: (status: string) => void
+}
+
+const ShowProfile:React.FC<PropsType> = (props) => {
   return (
     <div>
       {props.isAuth && (

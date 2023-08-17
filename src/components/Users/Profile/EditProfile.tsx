@@ -1,11 +1,24 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import styles from "./Profile.module.css";
-import { Field, reduxForm } from "redux-form";
+import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import ProfileInfo from "./ProfileInfo";
 
-const EditProfile = (props) => {
-  const onPhotoUpload = (photo) => {
-    if (photo.target.files.length) {
+interface EditProfileOwnPropsType {
+  userPhotoLarge: string | undefined
+  status: string
+  isAuth: boolean
+  
+  uploadPhoto: (file: File) => void
+  setUserStatus: (t: string) => void
+}
+
+interface EditProfileOwnValuesType {
+
+}
+
+const EditProfile:React.FC<InjectedFormProps<EditProfileOwnValuesType, EditProfileOwnPropsType> & EditProfileOwnPropsType> = (props) => {
+  const onPhotoUpload = (photo: ChangeEvent<HTMLInputElement>) => {
+    if (photo.target.files?.length) {
       props.uploadPhoto(photo.target.files[0]);
     }
   };
@@ -29,6 +42,7 @@ const EditProfile = (props) => {
           editMode={true}
           status={props.status}
           setUserStatus={props.setUserStatus}
+          isAuth={props.isAuth}
         />
       </div>
       <div className={styles.aboutMeContainer}>
@@ -44,10 +58,10 @@ const EditProfile = (props) => {
   );
 };
 
-const EditProfileWithForm = reduxForm({
+const EditProfileWithForm = reduxForm<EditProfileOwnValuesType, EditProfileOwnPropsType>({
   form: "edit-profile",
   enableReinitialize: true,
-  estroyOnUnmount: false,
+  destroyOnUnmount: false,
 })(EditProfile);
 
 export default EditProfileWithForm;

@@ -1,18 +1,33 @@
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import { compose } from "redux";
 import {
   getProfile,
   getUserStatus,
+  sendProfile,
   setUserStatus,
   uploadPhoto,
-  sendProfile,
 } from "../../../redux/profileReducer";
-import { connect } from "react-redux";
-import React, { useEffect } from "react";
-import { withAuthRedirect } from "../../../hoc/withAuthRedirect";
-import { compose } from "redux";
+import { AppStateType } from "../../../redux/redux-store";
+import { ProfileType } from "../../../types/types";
 import Profile from "./Profile";
-import { useParams } from "react-router-dom";
 
-const ProfileContainer = (props) => {
+interface PropsType {
+  profile: ProfileType | null
+  status: string
+  aboutMe: string
+  loggedUser: number
+  isFetching: boolean
+  
+  getProfile: (n: number) => void
+  getUserStatus: (n: number) => void
+  uploadPhoto: any
+  setUserStatus: (t: string) => void
+  sendProfile: any
+}
+
+const ProfileContainer:React.FC<PropsType> = (props) => {
   let { userId } = useParams();
   let params = Number(userId);
 
@@ -28,8 +43,6 @@ const ProfileContainer = (props) => {
   return (
     <div>
       <Profile
-        uploadPhoto={props.uploadPhoto}
-        userPhotoSmall={props.profile.photos.small}
         userPhotoLarge={props.profile.photos.large}
         setUserStatus={props.setUserStatus}
         status={props.status}
@@ -37,18 +50,19 @@ const ProfileContainer = (props) => {
         aboutMe={props.profile.aboutMe}
         userId={props.profile.userId}
         loggedUser={props.loggedUser}
-        lookingForAJob={props.profile.lookingForAJob}
         lookingForAJobDescription={props.profile.lookingForAJobDescription}
         contacts={props.profile.contacts}
         profile={props.profile}
         sendProfile={props.sendProfile}
         isFetching={props.isFetching}
+        lookingForAJob={props.profile.lookingForAJob}
+        uploadPhoto={props.uploadPhoto}
       />
     </div>
   );
 };
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType) => {
   return {
     profile: state.profile.profile,
     status: state.profile.status,
@@ -57,13 +71,12 @@ let mapStateToProps = (state) => {
   };
 };
 
-export default compose(
+export default compose<any>(
   connect(mapStateToProps, {
     getProfile,
     getUserStatus,
     setUserStatus,
     uploadPhoto,
     sendProfile,
-  }),
-  withAuthRedirect
+  })
 )(ProfileContainer);

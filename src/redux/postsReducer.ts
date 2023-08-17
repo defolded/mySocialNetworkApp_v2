@@ -1,8 +1,8 @@
-const ADD_POST = "ADD-POST";
+import { InferActionsTypes } from "./redux-store";
 
-interface PostsType {
+export interface PostType {
   id: number,
-  profilePicture: string | null,
+  profilePicture: string | undefined,
   username: string
   message: string
 }
@@ -38,14 +38,15 @@ let initialState = {
       message:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi iaculis nisi et arcu scelerisque lobortis. Nam non leo vitae massa ultrices viverra ut eu nibh. Nulla ullamcorper consequat metus, sit amet finibus sapien porttitor non. Phasellus at urna egestas, posuere ligula aliquet, feugiat nibh. Vestibulum commodo vitae quam ac tincidunt. Nulla scelerisque, est eget condimentum congue, est magna elementum risus, non hendrerit nunc magna id neque. Curabitur elementum sed justo nec ullamcorper. Cras malesuada sapien imperdiet orci hendrerit, eget molestie turpis blandit. Donec dignissim arcu non tellus venenatis lacinia. Suspendisse dictum tristique porta. Suspendisse in sapien at dolor rhoncus feugiat sit amet in dolor. Vestibulum odio elit, aliquet sed quam eget, dapibus auctor erat. Morbi eu ipsum ut nisl sagittis lacinia vitae eget erat. Etiam at ante ut quam vestibulum auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis tristique vel quam in condimentum. In hac habitasse platea dictumst. Donec ligula lectus, venenatis et ipsum eget, mattis feugiat turpis. Maecenas sapien arcu, aliquet ut arcu sed, laoreet convallis velit. Nam a tempor diam. Integer suscipit tortor vel pretium placerat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam cursus bibendum posuere. Suspendisse congue mi tristique facilisis accumsan. Fusce ut fermentum elit, eget tristique nisl. Aliquam erat volutpat. Vestibulum a eros lectus. Ut pretium enim ante, sit amet pellentesque justo tempor porttitor. Vivamus dui urna, vehicula in condimentum vel, ultrices non metus. Etiam pretium dolor tristique neque aliquet, ac elementum diam ultrices. Cras posuere lectus eget tortor vestibulum, sed pellentesque dolor tristique. Curabitur feugiat quam dolor, a interdum tellus luctus lacinia. Vestibulum finibus lacus nec tincidunt maximus. Sed in ligula ante. Praesent mattis pharetra urna, vel faucibus tortor molestie in. Duis non ipsum quis enim volutpat gravida. Sed neque nisi, ornare sit amet cursus ut, blandit nec risus. Sed interdum sodales imperdiet. Praesent ac erat sit amet lorem laoreet sodales sed in orci. Nulla feugiat tincidunt ligula eu convallis. Nulla feugiat tincidunt ligula eu convallis. Proin turpis lacus, commodo in porttitor eget, bibendum id lectus.",
     },
-  ] as PostsType[],
+  ] as PostType[],
 };
 
 type InitialStateType = typeof initialState
+type ActionTypes = InferActionsTypes<typeof actions>
 
-const postsReducer = (state = initialState, action: any):InitialStateType => {
+const postsReducer = (state = initialState, action: ActionTypes):InitialStateType => {
   switch (action.type) {
-    case ADD_POST: {
+    case "SN/MESSAGES/ADD-POST": {
       let newPost = {
         id: state.posts[state.posts.length - 1].id + 1,
         profilePicture:
@@ -63,11 +64,8 @@ const postsReducer = (state = initialState, action: any):InitialStateType => {
   }
 };
 
-interface AddPostActionType {
-  type: typeof ADD_POST
-  text: string
+export const actions = {
+  addPost: (text: string) => ({ type: 'SN/MESSAGES/ADD-POST', text } as const),
 }
-
-export const addPost = (text: string):AddPostActionType => ({ type: ADD_POST, text });
 
 export default postsReducer;

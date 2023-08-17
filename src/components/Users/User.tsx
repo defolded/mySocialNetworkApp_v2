@@ -1,9 +1,22 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./User.module.css";
 import Preloader from "../common/Preloader/Preloader";
+import styles from "./User.module.css";
+import React from "react";
 
-const User = (props) => {
+interface PropsType {
+  isFetchingUsersPage: boolean
+  userId: number
+  profilePicture: string
+  username: string
+  isFollowed: any
+  isFetching: number[]
+  message: string
+
+  unfollowUser: (u: number) => void
+  followUser: (u: number) => void
+}
+
+const User:React.FC<PropsType> = (props) => {
   if (props.isFetchingUsersPage) {
     return <Preloader />;
   }

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Paginator.module.css";
 
-interface Props {
+interface PropsType {
   totalUsersCount: number
   pageSize: number
   page: number
   setCurrentPage: (arg0: number) => void
 }
 
-const Paginator = (props: Props) => {
+const Paginator:React.FC<PropsType> = (props) => {
   let pageCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
   let pages:number[] = [];
