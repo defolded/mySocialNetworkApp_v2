@@ -7,29 +7,29 @@ const instance = axios.create({
 
 interface ArticlesResponseType {
   source: {
-    id: string
-    name: string
-  }
-  author: string
-  title: string
-  description: string
-  url: string
-  urlToImage: string
-  publishedAt: string
-  content: string
+    id: string;
+    name: string;
+  };
+  author: string;
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
+  publishedAt: string;
+  content: string;
 }
 
 interface GetTopHeadlinesForUSResponseType {
-  status: "ok" | "error"
-  totalResults: number
-  articles: ArticlesResponseType[]
+  status: "ok" | "error";
+  totalResults: number;
+  articles: ArticlesResponseType[];
 }
 
-interface GetTopHeadlinesForUSResponseErrorType {
-  status: "error"
-  code: string
-  message: string
-}
+// interface GetTopHeadlinesForUSResponseErrorType {
+//   status: "error"
+//   code: string
+//   message: string
+// }
 
 export const newsApi = {
   getTopHeadlinesForUS() {

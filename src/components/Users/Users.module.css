@@ -2,3 +2,12 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.search {
+  display: flex;
+  flex-direction: row;
+}
+
+.search input {
+  margin: 5px 7px;
+}

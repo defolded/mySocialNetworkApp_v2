@@ -9,21 +9,21 @@ export const instance = axios.create({
 
 export enum ResultCodeEnum {
   SuccesResultCode = 0,
-  ErrorResultCode = 1
+  ErrorResultCode = 1,
 }
 
 export enum ResultCodeForCaptchaEnum {
-  CaptchaIsRequired = 10
+  CaptchaIsRequired = 10,
 }
 
 export type ResponseType<D = {}, RC = ResultCodeEnum> = {
-  data: D
-  messages: string[]
-  resultCode: RC
-}
+  data: D;
+  messages: string[];
+  resultCode: RC;
+};
 
 export type GetUsersItems = {
-  items: UserType[]
-  totalCount: number
-  error: string | null
-}
+  items: UserType[];
+  totalCount: number;
+  error: string | null;
+};
