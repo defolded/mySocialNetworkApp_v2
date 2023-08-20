@@ -4,6 +4,18 @@
 
 (WIP)
 
+ **Test credentials for login:**
+ 
+ Email: 
+ ```bash
+free@samuraijs.com
+```
+Password:
+ ```bash
+free
+```
+
+
 ## Getting Started 🚀
 
 Set up your local development environment by following these steps:
