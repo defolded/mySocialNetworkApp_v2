@@ -1,10 +1,10 @@
 import { InferActionsTypes } from "./redux-store";
 
 export interface PostType {
-  id: number,
-  profilePicture: string | undefined,
-  username: string
-  message: string
+  id: number;
+  profilePicture: string | undefined;
+  username: string;
+  message: string;
 }
 
 let initialState = {
@@ -25,8 +25,7 @@ let initialState = {
     },
     {
       id: 3,
-      profilePicture:
-        "https://www.greekboston.com/wp-content/uploads/2017/12/Socrates.jpg",
+      profilePicture: "https://www.greekboston.com/wp-content/uploads/2017/12/Socrates.jpg",
       username: "Doran",
       message: "Let me think...",
     },
@@ -41,10 +40,10 @@ let initialState = {
   ] as PostType[],
 };
 
-type InitialStateType = typeof initialState
-type ActionTypes = InferActionsTypes<typeof actions>
+type InitialStateType = typeof initialState;
+type ActionTypes = InferActionsTypes<typeof actions>;
 
-const postsReducer = (state = initialState, action: ActionTypes):InitialStateType => {
+const postsReducer = (state = initialState, action: ActionTypes): InitialStateType => {
   switch (action.type) {
     case "SN/MESSAGES/ADD-POST": {
       let newPost = {
@@ -65,7 +64,7 @@ const postsReducer = (state = initialState, action: ActionTypes):InitialStateTyp
 };
 
 export const actions = {
-  addPost: (text: string) => ({ type: 'SN/MESSAGES/ADD-POST', text } as const),
-}
+  addPost: (text: string) => ({ type: "SN/MESSAGES/ADD-POST", text } as const),
+};
 
 export default postsReducer;

@@ -14,11 +14,11 @@ import Preloader from "./components/common/Preloader/Preloader";
 import { initializeApp } from "./redux/appReducer";
 import { AppStateType } from "./redux/redux-store";
 
-type MapPropsType = ReturnType<typeof mapStateToProps>
+type MapPropsType = ReturnType<typeof mapStateToProps>;
 
-type DispatchPropsType = { 
-  initializeApp: () => void
-}
+type DispatchPropsType = {
+  initializeApp: () => void;
+};
 
 class App extends React.Component<MapPropsType & DispatchPropsType> {
   componentDidMount() {
@@ -37,30 +37,18 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
           <div className="Content">
             <div className="Wrapper">
               <Routes>
-                <Route
-                  path="/posts"
-                  element={<MyPostsContainer state={this.props.state} />}
-                />
+                <Route path="/posts" element={<MyPostsContainer state={this.props.state} />} />
                 <Route
                   path="/messages/*"
                   element={<MessagesContainer state={this.props.state} />}
                 />
-                <Route
-                  path="/news"
-                  element={<NewsContainer state={this.props.state} />}
-                />
-                <Route
-                  path="/users"
-                  element={<UsersContainer state={this.props.state} />}
-                />
+                <Route path="/news" element={<NewsContainer state={this.props.state} />} />
+                <Route path="/users" element={<UsersContainer state={this.props.state} />} />
                 <Route
                   path="/users/:userId"
                   element={<ProfileContainer state={this.props.state} />}
                 />
-                <Route
-                  path="/login"
-                  element={<LoginContainer state={this.props.state} />}
-                />
+                <Route path="/login" element={<LoginContainer state={this.props.state} />} />
               </Routes>
             </div>
           </div>
@@ -72,7 +60,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
 
 const mapStateToProps = (state: AppStateType) => ({
   init: state.app.init,
-  state
+  state,
 });
 
 export default compose(connect(mapStateToProps, { initializeApp })(App));

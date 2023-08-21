@@ -6,15 +6,15 @@ import MyPost from "./SinglePost/SinglePost";
 import { PostType } from "../../redux/postsReducer";
 
 interface MapStateToPropsType {
-  posts: PostType[]
-  isAuth: boolean
+  posts: PostType[];
+  isAuth: boolean;
 }
 
 interface MapDispatchToPropsType {
-  addPost: (t: string) => void
+  addPost: (t: string) => void;
 }
 
-const MyPosts:React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
+const MyPosts: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
   const addPost = (values: any) => props.addPost(values.newPostBody);
 
   return (
@@ -29,20 +29,18 @@ const MyPosts:React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) =
           />
         ))}
       </div>
-      {props.isAuth ? <AddPostReduxForm onSubmit={addPost}/> : ""}
+      {props.isAuth ? <AddPostReduxForm onSubmit={addPost} /> : ""}
     </div>
   );
 };
 
-type AddPostFormValuesType = {
+type AddPostFormValuesType = {};
 
-}
+interface AddPostOwnPropsType {}
 
-interface AddPostOwnPropsType {
-  
-}
-
-const AddPostForm:React.FC<InjectedFormProps<AddPostFormValuesType, AddPostOwnPropsType> & AddPostOwnPropsType> = (props) => {
+const AddPostForm: React.FC<
+  InjectedFormProps<AddPostFormValuesType, AddPostOwnPropsType> & AddPostOwnPropsType
+> = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div className={b.userInput}>
@@ -59,6 +57,8 @@ const AddPostForm:React.FC<InjectedFormProps<AddPostFormValuesType, AddPostOwnPr
   );
 };
 
-const AddPostReduxForm = reduxForm<AddPostFormValuesType, AddPostOwnPropsType>({ form: "postAddPostForm" })(AddPostForm);
+const AddPostReduxForm = reduxForm<AddPostFormValuesType, AddPostOwnPropsType>({
+  form: "postAddPostForm",
+})(AddPostForm);
 
 export default MyPosts;

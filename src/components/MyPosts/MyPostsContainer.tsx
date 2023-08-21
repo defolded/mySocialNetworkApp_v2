@@ -11,6 +11,4 @@ let mapStateToProps = (state: AppStateType) => {
   };
 };
 
-export default compose<any>(connect(mapStateToProps, { addPost: actions.addPost }))(
-  MyPosts
-);
+export default compose<any>(connect(mapStateToProps, { addPost: actions.addPost }))(MyPosts);

@@ -6,20 +6,20 @@ import userPhoto from "../../../assets/profile-picture.jpg";
 import { ContactsType } from "../../../types/types";
 
 interface PropsType {
-  isAuth: boolean
-  userPhotoLarge: string | null
-  userName: string
-  lookingForAJob: boolean
-  status: string
-  aboutMe: string
-  lookingForAJobDescription: string
-  contacts: ContactsType
+  isAuth: boolean;
+  userPhotoLarge: string | null;
+  userName: string;
+  lookingForAJob: boolean;
+  status: string;
+  aboutMe: string;
+  lookingForAJobDescription: string;
+  contacts: ContactsType;
 
-  toggleEditMode: () => void
-  setUserStatus: (status: string) => void
+  toggleEditMode: () => void;
+  setUserStatus: (status: string) => void;
 }
 
-const ShowProfile:React.FC<PropsType> = (props) => {
+const ShowProfile: React.FC<PropsType> = (props) => {
   return (
     <div>
       {props.isAuth && (
@@ -30,15 +30,10 @@ const ShowProfile:React.FC<PropsType> = (props) => {
         </div>
       )}
       <div className={styles.headingContainer}>
-        <img
-          src={props.userPhotoLarge ? props.userPhotoLarge : userPhoto}
-          alt="user"
-        />
+        <img src={props.userPhotoLarge ? props.userPhotoLarge : userPhoto} alt="user" />
         <div className={styles.fullName}>
           <h1>{props.userName}</h1>
-          <div
-            className={props.lookingForAJob ? styles.greenDot : styles.redDot}
-          />
+          <div className={props.lookingForAJob ? styles.greenDot : styles.redDot} />
         </div>
         <ProfileInfo
           status={props.status}

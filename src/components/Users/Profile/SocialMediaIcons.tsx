@@ -14,10 +14,10 @@ import styles from "./Profile.module.css";
 import { ContactsType } from "../../../types/types";
 
 interface PropsType {
-  contacts: ContactsType
+  contacts: ContactsType;
 }
 
-const SocialMediaIcons:React.FC<PropsType> = ({ contacts }) => {
+const SocialMediaIcons: React.FC<PropsType> = ({ contacts }) => {
   return (
     <IconContext.Provider value={{ color: "black", size: "1.4em" }}>
       <div className={styles.contacts}>
@@ -35,11 +35,7 @@ const SocialMediaIcons:React.FC<PropsType> = ({ contacts }) => {
         >
           <BsLink45Deg />
         </Link>
-        <Link
-          to={contacts.vk}
-          target="_blank"
-          className={contacts.vk ? "" : styles.empty}
-        >
+        <Link to={contacts.vk} target="_blank" className={contacts.vk ? "" : styles.empty}>
           <SlSocialVkontakte />
         </Link>
         <Link
@@ -63,11 +59,7 @@ const SocialMediaIcons:React.FC<PropsType> = ({ contacts }) => {
         >
           <BsYoutube />
         </Link>
-        <Link
-          to={contacts.github}
-          target="_blank"
-          className={contacts.github ? "" : styles.empty}
-        >
+        <Link to={contacts.github} target="_blank" className={contacts.github ? "" : styles.empty}>
           <BsGithub />
         </Link>
       </div>

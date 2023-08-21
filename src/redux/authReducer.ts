@@ -11,10 +11,10 @@ let initialState = {
   captchaUrl: null as string | null,
 };
 
-type InitialStateType = typeof initialState
-type ActionTypes = InferActionsTypes<typeof actions>
+type InitialStateType = typeof initialState;
+type ActionTypes = InferActionsTypes<typeof actions>;
 
-const authReducer = (state = initialState, action: ActionTypes):InitialStateType => {
+const authReducer = (state = initialState, action: ActionTypes): InitialStateType => {
   switch (action.type) {
     case "SN/AUTH/SET-USER-DATA":
       return {
@@ -31,14 +31,17 @@ const authReducer = (state = initialState, action: ActionTypes):InitialStateType
   }
 };
 
-
 const actions = {
-  setAuthUserData: (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({type: "SN/AUTH/SET-USER-DATA",
-    payload: { userId, email, login, isAuth }} as const),
+  setAuthUserData: (
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean
+  ) => ({ type: "SN/AUTH/SET-USER-DATA", payload: { userId, email, login, isAuth } } as const),
   getCaptchaUrlSuccess: (url: string | null) => ({ type: "SN/AUTH/GET-CAPTCHA-URL", url } as const),
-}
+};
 
-export const getAuthUserData = ():ThunkTypeProto<ActionTypes> => async (dispatch) => {
+export const getAuthUserData = (): ThunkTypeProto<ActionTypes> => async (dispatch) => {
   let res = await authAPI.getAuthUserData();
   if (res.resultCode === ResultCodeEnum.SuccesResultCode) {
     let { id, login, email } = res.data;
@@ -47,7 +50,13 @@ export const getAuthUserData = ():ThunkTypeProto<ActionTypes> => async (dispatch
 };
 
 export const login =
-  (email: string, password: string, rememberMe: boolean, captcha: string | null):ThunkTypeProto<ActionTypes> => async (dispatch) => {
+  (
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string | null
+  ): ThunkTypeProto<ActionTypes> =>
+  async (dispatch) => {
     let res = await authAPI.login(email, password, rememberMe, captcha);
     if (res.data.resultCode === ResultCodeEnum.SuccesResultCode) {
       dispatch(getAuthUserData());
@@ -59,12 +68,12 @@ export const login =
     }
   };
 
-export const getCaptchaUrl = ():ThunkTypeProto<ActionTypes> => async (dispatch) => {
+export const getCaptchaUrl = (): ThunkTypeProto<ActionTypes> => async (dispatch) => {
   let res = await securityAPI.getCaptcha();
   dispatch(actions.getCaptchaUrlSuccess(res.data.url));
 };
 
-export const logout = ():ThunkTypeProto<ActionTypes> => async (dispatch) => {
+export const logout = (): ThunkTypeProto<ActionTypes> => async (dispatch) => {
   let res = await authAPI.logout();
   if (res.data.resultCode === 0) {
     dispatch(actions.setAuthUserData(null, null, null, false));

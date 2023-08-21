@@ -1,15 +1,15 @@
 import { ChangeEvent, useEffect, useState } from "react";
 
 interface PropsType {
-  status: string
-  isAuth: boolean
+  status: string;
+  isAuth: boolean;
 
-  setUserStatus: (status: string) => void
+  setUserStatus: (status: string) => void;
 }
 
 interface StateType {
-  status: string
-  editMode?: boolean
+  status: string;
+  editMode?: boolean;
 }
 
 const ProfileInfo = (props: PropsType & StateType) => {
@@ -44,12 +44,7 @@ const ProfileInfo = (props: PropsType & StateType) => {
         </div>
       ) : (
         <div>
-          <input
-            autoFocus
-            onBlur={deactivateEditMode}
-            value={status}
-            onChange={onStatusChange}
-          />
+          <input autoFocus onBlur={deactivateEditMode} value={status} onChange={onStatusChange} />
         </div>
       )}
     </div>

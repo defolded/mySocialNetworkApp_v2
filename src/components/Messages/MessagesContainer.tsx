@@ -12,6 +12,4 @@ let mapStateToProps = (state: AppStateType) => {
   };
 };
 
-export default compose<any>(
-  connect(mapStateToProps, { addMessage: actions.addMessage })
-)(Messages);
+export default compose<any>(connect(mapStateToProps, { addMessage: actions.addMessage }))(Messages);

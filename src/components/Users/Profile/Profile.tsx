@@ -5,24 +5,24 @@ import Preloader from "../../common/Preloader/Preloader";
 import { ContactsType, ProfileType } from "../../../types/types";
 
 interface PropsType {
-  userId: number
-  loggedUser: number
-  isFetching: boolean
-  profile: ProfileType
-  userPhotoLarge: any
-  userName: string
-  aboutMe: string
-  lookingForAJob: boolean
-  lookingForAJobDescription: string
-  contacts: ContactsType
-  status: string
+  userId: number;
+  loggedUser: number;
+  isFetching: boolean;
+  profile: ProfileType;
+  userPhotoLarge: any;
+  userName: string;
+  aboutMe: string;
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
+  contacts: ContactsType;
+  status: string;
 
-  sendProfile: (O: ProfileType) => Promise<any>
-  setUserStatus: (t: string) => void
-  uploadPhoto: (file: File) => void
+  sendProfile: (O: ProfileType) => Promise<any>;
+  setUserStatus: (t: string) => void;
+  uploadPhoto: (file: File) => void;
 }
 
-const Profile:React.FC<PropsType> = (props) => {
+const Profile: React.FC<PropsType> = (props) => {
   const [editMode, setEditMode] = useState(false);
 
   const toggleEditMode = () => {

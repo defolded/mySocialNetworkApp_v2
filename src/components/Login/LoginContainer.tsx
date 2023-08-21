@@ -20,5 +20,5 @@ let mapStateToProps = (state: AppStateType) => {
 export default compose<any>(
   connect(mapStateToProps, {
     login,
-  }),
+  })
 )(LoginContainer);

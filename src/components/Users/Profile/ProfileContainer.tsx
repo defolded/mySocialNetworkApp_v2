@@ -14,20 +14,20 @@ import { ProfileType } from "../../../types/types";
 import Profile from "./Profile";
 
 interface PropsType {
-  profile: ProfileType | null
-  status: string
-  aboutMe: string
-  loggedUser: number
-  isFetching: boolean
-  
-  getProfile: (n: number) => void
-  getUserStatus: (n: number) => void
-  uploadPhoto: any
-  setUserStatus: (t: string) => void
-  sendProfile: any
+  profile: ProfileType | null;
+  status: string;
+  aboutMe: string;
+  loggedUser: number;
+  isFetching: boolean;
+
+  getProfile: (n: number) => void;
+  getUserStatus: (n: number) => void;
+  uploadPhoto: any;
+  setUserStatus: (t: string) => void;
+  sendProfile: any;
 }
 
-const ProfileContainer:React.FC<PropsType> = (props) => {
+const ProfileContainer: React.FC<PropsType> = (props) => {
   let { userId } = useParams();
   let params = Number(userId);
 

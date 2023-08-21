@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import userPhoto from "../../assets/profile-picture.jpg";
 import { UserType } from "../../types/types";
 import Paginator from "./Paginator";
 import User from "./User";
 import styles from "./Users.module.css";
-import { useForm, SubmitHandler } from "react-hook-form";
 
 interface PropsType {
   page: number;
@@ -22,6 +23,45 @@ interface PropsType {
 }
 
 const Users: React.FC<PropsType> = (props) => {
+  const location = useLocation();
+  const [searchParams] = useSearchParams(location.search);
+
+  useEffect(() => {
+    let actualPage = props.page;
+    let actualTerm = props.term;
+    let actualFriend = props.friend;
+    let parsed = Object.fromEntries([...searchParams]);
+
+    if (!!parsed.page) actualPage = Number(parsed.page);
+    if (!!parsed.term) {
+      if (/^[a-zA-Z0-9\s]*$/.test(parsed.term)) actualTerm = parsed.term;
+    }
+    if (!!parsed.friend) {
+      switch (parsed.friend) {
+        case "null":
+          actualFriend = null;
+          break;
+        case "true":
+          actualFriend = true;
+          break;
+        case "false":
+          actualFriend = false;
+          break;
+        default:
+          actualFriend = null;
+          break;
+      }
+    }
+
+    props.setCurrentPage(actualPage, actualTerm, actualFriend);
+  }, []);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate(`?term=${props.term}&friend=${props.friend}&page=${props.page}`, { relative: "path" });
+  }, [props.term, props.friend, props.page]);
+
   const followUser = (userId: number) => {
     props.follow(userId);
   };
@@ -33,7 +73,12 @@ const Users: React.FC<PropsType> = (props) => {
   return (
     <div>
       <div className={styles.search}>
-        <SearchForm page={props.page} setCurrentPage={props.setCurrentPage} />
+        <SearchForm
+          term={props.term}
+          friend={props.friend}
+          page={props.page}
+          setCurrentPage={props.setCurrentPage}
+        />
       </div>
 
       <Paginator
@@ -73,30 +118,48 @@ const Users: React.FC<PropsType> = (props) => {
 
 type FormInputs = {
   term: string;
-  friend: boolean;
+  friend: boolean | null;
 };
 
 interface SearchFormOwnPropsType {
+  term: string;
+  friend: boolean | null;
+
   page: number;
   setCurrentPage: (page: number, term: string, friend: boolean | null) => void;
 }
 
 const SearchForm: React.FC<SearchFormOwnPropsType> = (props) => {
-  const { register, handleSubmit, reset } = useForm<FormInputs>();
+  let values = { term: props.term, friend: props.friend };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormInputs>({
+    values,
+  });
 
   const onSubmit: SubmitHandler<FormInputs> = (data: any) =>
     props.setCurrentPage(1, data.term, data.friend);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.searchForm}>
-      <input placeholder="Type name" {...register("term")} />
+      <input placeholder="Type name" {...register("term", { pattern: /^[A-Za-z0-9]+$/i })} />
+      {errors.term && (
+        <span style={{ color: "#D10000", fontWeight: "bold" }}>Incorrect symbols.</span>
+      )}
       <input type="checkbox" {...register("friend")} /> Following
       <input type="submit" />
       <input
         type="submit"
         value="reset"
         onClick={() => {
-          reset();
+          reset({
+            term: "",
+            friend: null,
+          });
         }}
       />
     </form>

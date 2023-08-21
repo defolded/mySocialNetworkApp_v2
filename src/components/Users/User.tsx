@@ -4,19 +4,19 @@ import styles from "./User.module.css";
 import React from "react";
 
 interface PropsType {
-  isFetchingUsersPage: boolean
-  userId: number
-  profilePicture: string
-  username: string
-  isFollowed: any
-  isFetching: number[]
-  message: string
+  isFetchingUsersPage: boolean;
+  userId: number;
+  profilePicture: string;
+  username: string;
+  isFollowed: any;
+  isFetching: number[];
+  message: string;
 
-  unfollowUser: (u: number) => void
-  followUser: (u: number) => void
+  unfollowUser: (u: number) => void;
+  followUser: (u: number) => void;
 }
 
-const User:React.FC<PropsType> = (props) => {
+const User: React.FC<PropsType> = (props) => {
   if (props.isFetchingUsersPage) {
     return <Preloader />;
   }

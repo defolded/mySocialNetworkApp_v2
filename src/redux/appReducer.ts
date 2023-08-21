@@ -5,10 +5,10 @@ let initialState = {
   init: false,
 };
 
-type InitialStateType = typeof initialState
-type ActionTypes = InferActionsTypes<typeof actions>
+type InitialStateType = typeof initialState;
+type ActionTypes = InferActionsTypes<typeof actions>;
 
-const appReducer = (state = initialState, action: ActionTypes):InitialStateType => {
+const appReducer = (state = initialState, action: ActionTypes): InitialStateType => {
   switch (action.type) {
     case "SN/APP/SET-INIT":
       return {
@@ -22,9 +22,9 @@ const appReducer = (state = initialState, action: ActionTypes):InitialStateType 
 
 export const actions = {
   initSuccess: () => ({ type: "SN/APP/SET-INIT" } as const),
-}
+};
 
-export const initializeApp = ():ThunkTypeProto<ActionTypes> => async (dispatch) => {
+export const initializeApp = (): ThunkTypeProto<ActionTypes> => async (dispatch) => {
   await dispatch(getAuthUserData());
   dispatch(actions.initSuccess());
 };

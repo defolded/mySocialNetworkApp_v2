@@ -1,10 +1,10 @@
 import React from "react";
 
 interface PropsType {
-  text: string
+  text: string;
 }
 
-const SingleMessage:React.FC<PropsType> = (props) => {
+const SingleMessage: React.FC<PropsType> = (props) => {
   return <div>{props.text}</div>;
 };
 

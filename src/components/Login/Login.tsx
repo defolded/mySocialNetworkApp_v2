@@ -8,26 +8,22 @@ import { required } from "../../utils/validators";
 import styles from "./Login.module.css";
 
 interface LoginFormOwnPropsType {
-  captchaUrl: null | string
+  captchaUrl: null | string;
 }
 
-const LoginForm:React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnPropsType> & LoginFormOwnPropsType> = (props) => {
+const LoginForm: React.FC<
+  InjectedFormProps<LoginFormValuesType, LoginFormOwnPropsType> & LoginFormOwnPropsType
+> = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div className={styles.formDiv}>
         <Field placeholder="Email" name="email" component="input" />
       </div>
       <div className={styles.formDiv}>
-        <Field
-          placeholder="Password"
-          name="password"
-          component="input"
-          type="password"
-        />
+        <Field placeholder="Password" name="password" component="input" type="password" />
       </div>
       <div className={styles.formDiv}>
-        <Field type="checkbox" name="rememberMe" component="input" /> remember
-        me
+        <Field type="checkbox" name="rememberMe" component="input" /> remember me
       </div>
       {props.error && (
         <div className={styles.errorMessage}>
@@ -36,12 +32,7 @@ const LoginForm:React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnProp
       )}
       {props.captchaUrl && <img src={props.captchaUrl} alt="captcha" />}
       {props.captchaUrl && (
-        <Field
-          placeholder="Enter captcha"
-          name="captcha"
-          validate={required}
-          component="input"
-        />
+        <Field placeholder="Enter captcha" name="captcha" validate={required} component="input" />
       )}
       <div className={styles.buttonDiv}>
         <button>Login</button>
@@ -54,31 +45,25 @@ const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnPropsType>({
   form: "login",
 })(LoginForm);
 
-
 interface MapStateToPropsType {
-  captchaUrl: string | null
-  isAuth: boolean
+  captchaUrl: string | null;
+  isAuth: boolean;
 }
 
 interface MapDispatchToPropsType {
-  login: (email: string, password: string, remmemberMe: boolean, captcha: null | string) => void
+  login: (email: string, password: string, remmemberMe: boolean, captcha: null | string) => void;
 }
 
 interface LoginFormValuesType {
-  email: string
-  password: string
-  rememberMe: boolean
-  captcha: string | null
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  captcha: string | null;
 }
 
-const Login:React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
+const Login: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
   const onSubmit = (formData: LoginFormValuesType) => {
-    props.login(
-      formData.email,
-      formData.password,
-      formData.rememberMe,
-      formData.captcha
-    );
+    props.login(formData.email, formData.password, formData.rememberMe, formData.captcha);
   };
 
   if (props.isAuth) {
@@ -93,10 +78,10 @@ const Login:React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => 
   );
 };
 
-let mapStateToProps = (state: AppStateType):MapStateToPropsType => {
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
   return {
     captchaUrl: state.auth.captchaUrl,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
   };
 };
 

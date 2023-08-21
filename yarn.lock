@@ -9205,7 +9205,6 @@ __metadata:
     "@types/react-dom": ^18.2.7
     "@types/redux-form": ^8.3.5
     axios: ^1.4.0
-    nth-check: ^2.1.1
     react: ^18.2.0
     react-dom: ^18.2.0
     react-hook-form: ^7.45.4
@@ -9383,7 +9382,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nth-check@npm:^2.0.1, nth-check@npm:^2.1.1":
+"nth-check@npm:^2.0.1":
   version: 2.1.1
   resolution: "nth-check@npm:2.1.1"
   dependencies:

@@ -7,19 +7,20 @@ import MyMessage from "./MyMessage/MyMessage";
 import Person from "./Person/Person";
 
 interface PropsType {
-  isAuth: boolean
-  dialogs: DialogType[]
-  messages: MessageType[]
+  isAuth: boolean;
+  dialogs: DialogType[];
+  messages: MessageType[];
 
-  addMessage: (newMessageBody: string) => void
+  addMessage: (newMessageBody: string) => void;
 }
 
 interface NewMessageFormValuesType {
-  newMessageBody: string
+  newMessageBody: string;
 }
 
-const Messages:React.FC<PropsType> = (props) => {
-  const addMessage = (values: {newMessageBody: string}) => props.addMessage(values.newMessageBody);
+const Messages: React.FC<PropsType> = (props) => {
+  const addMessage = (values: { newMessageBody: string }) =>
+    props.addMessage(values.newMessageBody);
 
   return (
     <div className={styles.content}>
@@ -40,7 +41,9 @@ const Messages:React.FC<PropsType> = (props) => {
   );
 };
 
-const AddMessageForm:React.FC<InjectedFormProps<NewMessageFormValuesType, PropsType> & PropsType> = (props) => {
+const AddMessageForm: React.FC<
+  InjectedFormProps<NewMessageFormValuesType, PropsType> & PropsType
+> = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div className={b.userInput}>
@@ -56,8 +59,8 @@ const AddMessageForm:React.FC<InjectedFormProps<NewMessageFormValuesType, PropsT
   );
 };
 
-const AddMessageFormRedux = reduxForm<NewMessageFormValuesType, PropsType>({ form: "messagesAddMessageForm" })(
-  AddMessageForm
-);
+const AddMessageFormRedux = reduxForm<NewMessageFormValuesType, PropsType>({
+  form: "messagesAddMessageForm",
+})(AddMessageForm);
 
 export default Messages;

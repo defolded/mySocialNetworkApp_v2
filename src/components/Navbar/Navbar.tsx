@@ -1,15 +1,16 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
+import { reset } from "redux-form";
 
 interface PropsType {
-  userId: number
-  login: string
-  isAuth: boolean
+  userId: number;
+  login: string;
+  isAuth: boolean;
 
-  logout: () => void
+  logout: () => void;
 }
 
-const Navbar:React.FC<PropsType> = (props) => {
+const Navbar: React.FC<PropsType> = (props) => {
   return (
     <div className={styles.nav}>
       <div className={styles.wrapper}>

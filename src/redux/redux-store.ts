@@ -20,15 +20,21 @@ let reducers = combineReducers({
   form: formReducer,
 });
 
-type RootReducerType = typeof reducers
-export type AppStateType = ReturnType<RootReducerType>
+type RootReducerType = typeof reducers;
+export type AppStateType = ReturnType<RootReducerType>;
 
-type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never
+type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never;
 
-export type InferActionsTypes<T extends {[key: string]: (...args: any[]) => any}> = ReturnType<PropertiesTypes<T>>
+export type InferActionsTypes<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<
+  PropertiesTypes<T>
+>;
 
-export type ThunkTypeProto<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>
-
+export type ThunkTypeProto<A extends Action, R = Promise<void>> = ThunkAction<
+  R,
+  AppStateType,
+  unknown,
+  A
+>;
 
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 // @ts-ignore

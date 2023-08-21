@@ -1,11 +1,11 @@
 import { instance } from "./api";
 
 interface GetCaptchaResponseType {
-    url: string
+  url: string;
 }
 
 export const securityAPI = {
-    getCaptcha() {
-      return instance.get<GetCaptchaResponseType>(`security/get-captcha-url`);
-    },
+  getCaptcha() {
+    return instance.get<GetCaptchaResponseType>(`security/get-captcha-url`);
+  },
 };

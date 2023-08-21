@@ -6,11 +6,11 @@ import { compose } from "redux";
 import { AppStateType } from "../../redux/redux-store";
 
 interface PropsType {
-  userId: number
-  login: string
-  isAuth: boolean
+  userId: number;
+  login: string;
+  isAuth: boolean;
 
-  logout: () => void
+  logout: () => void;
 }
 
 class NavbarContainer extends React.Component<PropsType> {
@@ -32,6 +32,4 @@ const mapStateToProps = (state: AppStateType) => ({
   userId: state.auth.userId,
 });
 
-export default compose<any>(connect(mapStateToProps, { getAuthUserData, logout }))(
-  NavbarContainer
-);
+export default compose<any>(connect(mapStateToProps, { getAuthUserData, logout }))(NavbarContainer);

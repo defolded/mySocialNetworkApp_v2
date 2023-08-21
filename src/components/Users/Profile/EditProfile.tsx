@@ -4,19 +4,19 @@ import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import ProfileInfo from "./ProfileInfo";
 
 interface EditProfileOwnPropsType {
-  userPhotoLarge: string | undefined
-  status: string
-  isAuth: boolean
-  
-  uploadPhoto: (file: File) => void
-  setUserStatus: (t: string) => void
+  userPhotoLarge: string | undefined;
+  status: string;
+  isAuth: boolean;
+
+  uploadPhoto: (file: File) => void;
+  setUserStatus: (t: string) => void;
 }
 
-interface EditProfileOwnValuesType {
+interface EditProfileOwnValuesType {}
 
-}
-
-const EditProfile:React.FC<InjectedFormProps<EditProfileOwnValuesType, EditProfileOwnPropsType> & EditProfileOwnPropsType> = (props) => {
+const EditProfile: React.FC<
+  InjectedFormProps<EditProfileOwnValuesType, EditProfileOwnPropsType> & EditProfileOwnPropsType
+> = (props) => {
   const onPhotoUpload = (photo: ChangeEvent<HTMLInputElement>) => {
     if (photo.target.files?.length) {
       props.uploadPhoto(photo.target.files[0]);
