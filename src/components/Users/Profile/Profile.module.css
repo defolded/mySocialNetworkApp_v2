@@ -20,7 +20,6 @@
 }
 
 .greenDot {
-  /* use on empty div */
   width: 14px;
   height: 14px;
   background: #45f248;
@@ -115,35 +114,3 @@
   color: rgba(0, 0, 0, 0.65);
   transform: translateY(0);
 }
-
-/* .editBtn {
-  opacity: 60%;
-  background-color: #f8f9fa;
-  border: 1px solid #f8f9fa;
-  border-radius: 4px;
-  color: #3c4043cc;
-  cursor: pointer;
-  font-family: arial, sans-serif;
-  font-size: 14px;
-  height: 28px;
-  line-height: 27px;
-  min-width: 56px;
-  padding: 0 16px;
-  text-align: center;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: pre;
-}
-
-.editBtn:hover {
-  opacity: 80%;
-  border-color: #dadce0;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 1px 1px;
-  color: #202124;
-}
-
-.editBtn:focus {
-  border-color: rgba(0, 0, 0, 0.35);
-  outline: none;
-} */

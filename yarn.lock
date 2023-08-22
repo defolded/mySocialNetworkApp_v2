@@ -2954,6 +2954,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^20.5.2":
+  version: 20.5.2
+  resolution: "@types/node@npm:20.5.2"
+  checksum: 46d032bb9a1db687693f6351702572d2f1e12face32caf8182323413918de27d4ac16cc2b15ff6b891651313e602da18edbdd095d16d2b5a26588c2edffca892
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -9201,6 +9208,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
     "@testing-library/user-event": ^13.5.0
+    "@types/node": ^20.5.2
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
     "@types/redux-form": ^8.3.5
