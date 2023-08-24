@@ -154,21 +154,17 @@ export const getUsers =
     async (dispatch) => {
       dispatch(actions.toggleIsFetchingUsersPage(true));
       dispatch(actions.setCurrentPage(page));
-      let res = await usersAPI.getUsers(page, pageSize, term, friend, statusCheck, avatarCheck);
+      let res = await usersAPI.getUsers(page, pageSize, term, friend);
 
       dispatch(actions.setUserSearch(term, friend));
       dispatch(actions.setUserFilter(statusCheck, avatarCheck));
 
-      if (res) {
-        dispatch(actions.setTotalUsersCount(res.totalCount));
-        dispatch(actions.setUsers(res.items));
-        dispatch(actions.toggleIsFetchingUsersPage(false));
-      }
+      if (statusCheck) res.items = res.items.filter((e) => e.status !== null)
+      if (avatarCheck) res.items = res.items.filter((e) => e.photos.small !== null)
 
-
-      // if (statusCheck) res.items = res.items.filter((e) => e.status !== null)
-      // if (avatarCheck) res.items = res.items.filter((e) => e.photos.small !== null)
-
+      dispatch(actions.setTotalUsersCount(res.totalCount));
+      dispatch(actions.setUsers(res.items));
+      dispatch(actions.toggleIsFetchingUsersPage(false));
     };
 
 export const follow =

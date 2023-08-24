@@ -84,16 +84,16 @@ const Users: React.FC<PropsType> = (props) => {
 
   return (
     <div>
-      <div className={styles.search}>
-        <SearchForm
-          term={props.term}
-          friend={props.friend}
-          page={props.page}
-          setCurrentPage={props.setCurrentPage}
-          statusCheck={statusCheck}
-          avatarCheck={avatarCheck}
-        />
-      </div>
+      {/* <div className={styles.search}> */}
+      <SearchForm
+        term={props.term}
+        friend={props.friend}
+        page={props.page}
+        setCurrentPage={props.setCurrentPage}
+        statusCheck={statusCheck}
+        avatarCheck={avatarCheck}
+      />
+      {/* </div> */}
 
       <Paginator
         page={props.page}
@@ -179,27 +179,37 @@ const SearchForm: React.FC<SearchFormOwnPropsType> = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.searchForm}>
-      <input placeholder="Type name" {...register("term", { pattern: /^[A-Za-z0-9]+$/i })} />
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.search}>
+      <input
+        placeholder="Type name"
+        {...register("term", { pattern: /^[A-Za-z0-9]+$/i })}
+        className={styles.textInput}
+      />
       {errors.term && (
         <span style={{ color: "#D10000", fontWeight: "bold" }}>Incorrect symbols.</span>
       )}
-      <input type="checkbox" {...register("friend")} /> Following
-      <input type="checkbox" {...register("statusCheck")} /> Status
-      <input type="checkbox" {...register("avatarCheck")} /> Avatar
-      <input type="submit" value="search" />
-      <input
-        type="submit"
-        value="reset"
-        onClick={() => {
-          reset({
-            term: "",
-            friend: null,
-            statusCheck: false,
-            avatarCheck: false,
-          });
-        }}
-      />
+      <input type="checkbox" {...register("friend")} className={styles.checkboxType} />
+      <p>Following</p>
+      <input type="checkbox" {...register("statusCheck")} className={styles.checkboxType} />{" "}
+      <p>Status</p>
+      <input type="checkbox" {...register("avatarCheck")} className={styles.checkboxType} />{" "}
+      <p>Avatar</p>
+      <div className={styles.buttons}>
+        <input type="submit" value="search" className={styles.btn} />
+        <input
+          type="submit"
+          value="reset"
+          className={styles.btn}
+          onClick={() => {
+            reset({
+              term: "",
+              friend: null,
+              statusCheck: false,
+              avatarCheck: false,
+            });
+          }}
+        />
+      </div>
     </form>
   );
 };

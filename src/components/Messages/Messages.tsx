@@ -55,7 +55,7 @@ const AddMessageForm: React.FC<AddMessageFormOwnPropsType> = (props) => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.searchForm}>
       <div className={b.userInput}>
         <input
-          placeholder="Start typing your message"
+          placeholder="Start typing..."
           {...register("messageText", { pattern: /^[a-zA-Z0-9_]+( [a-zA-Z0-9_!'.,-\\?]+)*$/i })}
           className={b.text}
         />
