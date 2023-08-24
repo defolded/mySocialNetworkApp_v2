@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserType } from "../types/types";
+import { GetUsersDataType } from "../types/types";
 
 export const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
@@ -23,7 +23,7 @@ export type ResponseType<D = {}, RC = ResultCodeEnum> = {
 };
 
 export type GetUsersItems = {
-  items: UserType[];
+  items: GetUsersDataType[];
   totalCount: number;
   error: string | null;
 };

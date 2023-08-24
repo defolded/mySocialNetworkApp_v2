@@ -2,10 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 5%;
-  margin-bottom: 3%;
-}
-
-.userInput textarea {
+  margin-bottom: 1.5%;
   padding: 0.5em;
   resize: none;
 }

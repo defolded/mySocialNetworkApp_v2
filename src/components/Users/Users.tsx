@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import userPhoto from "../../assets/profile-picture.jpg";
-import { UserType } from "../../types/types";
+import { AppStateType } from "../../redux/redux-store";
+import { GetUsersDataType } from "../../types/types";
 import Paginator from "./Paginator";
 import User from "./User";
 import styles from "./Users.module.css";
+import b from "../.././Button.module.css";
 
 interface PropsType {
   page: number;
   totalUsersCount: number;
   pageSize: number;
-  users: UserType[];
+  users: GetUsersDataType[];
   isFetching: number[];
   isFetchingUsersPage: boolean;
   term: string;
@@ -19,12 +22,21 @@ interface PropsType {
 
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
-  setCurrentPage: (page: number, term: string, friend: boolean | null) => void;
+  setCurrentPage: (
+    page: number,
+    term: string,
+    friend: boolean | null,
+    statusCheck: boolean,
+    avatarCheck: boolean
+  ) => void;
 }
 
 const Users: React.FC<PropsType> = (props) => {
   const location = useLocation();
   const [searchParams] = useSearchParams(location.search);
+
+  let statusCheck = useSelector((state: AppStateType) => state.users.statusCheck);
+  let avatarCheck = useSelector((state: AppStateType) => state.users.avatarCheck);
 
   useEffect(() => {
     let actualPage = props.page;
@@ -53,7 +65,7 @@ const Users: React.FC<PropsType> = (props) => {
       }
     }
 
-    props.setCurrentPage(actualPage, actualTerm, actualFriend);
+    props.setCurrentPage(actualPage, actualTerm, actualFriend, statusCheck, avatarCheck);
   }, []);
 
   const navigate = useNavigate();
@@ -72,18 +84,22 @@ const Users: React.FC<PropsType> = (props) => {
 
   return (
     <div>
-      <div className={styles.search}>
-        <SearchForm
-          term={props.term}
-          friend={props.friend}
-          page={props.page}
-          setCurrentPage={props.setCurrentPage}
-        />
-      </div>
+      {/* <div className={styles.search}> */}
+      <SearchForm
+        term={props.term}
+        friend={props.friend}
+        page={props.page}
+        setCurrentPage={props.setCurrentPage}
+        statusCheck={statusCheck}
+        avatarCheck={avatarCheck}
+      />
+      {/* </div> */}
 
       <Paginator
         page={props.page}
         setCurrentPage={props.setCurrentPage}
+        statusCheck={statusCheck}
+        avatarCheck={avatarCheck}
         totalUsersCount={props.totalUsersCount}
         pageSize={props.pageSize}
         term={props.term}
@@ -93,16 +109,10 @@ const Users: React.FC<PropsType> = (props) => {
       <div className={styles.container}>
         {props.users.map((user) => (
           <User
-            profilePicture={
-              user.profilePicture
-                ? user.profilePicture
-                : user.photos.small === null
-                ? userPhoto
-                : user.photos.small
-            }
-            username={user.username ? user.username : user.name}
-            isFollowed={user.isFollowed ? user.isFollowed : user.followed}
-            message={user.message ? user.message : user.status}
+            profilePicture={user.photos.small === null ? userPhoto : user.photos.small}
+            username={user.name}
+            isFollowed={user.followed}
+            message={user.status}
             followUser={followUser}
             unfollowUser={unfollowUser}
             userId={user.id}
@@ -119,6 +129,8 @@ const Users: React.FC<PropsType> = (props) => {
 type FormInputs = {
   term: string;
   friend: boolean | null;
+  statusCheck: boolean;
+  avatarCheck: boolean;
 };
 
 interface SearchFormOwnPropsType {
@@ -126,11 +138,32 @@ interface SearchFormOwnPropsType {
   friend: boolean | null;
 
   page: number;
-  setCurrentPage: (page: number, term: string, friend: boolean | null) => void;
+  statusCheck: boolean;
+  avatarCheck: boolean;
+  setCurrentPage: (
+    page: number,
+    term: string,
+    friend: boolean | null,
+    statusCheck: boolean,
+    avatarCheck: boolean
+  ) => void;
+}
+
+interface DataType {
+  term: string;
+  friend: boolean | null;
+
+  statusCheck: boolean;
+  avatarCheck: boolean;
 }
 
 const SearchForm: React.FC<SearchFormOwnPropsType> = (props) => {
-  let values = { term: props.term, friend: props.friend };
+  let values = {
+    term: props.term,
+    friend: props.friend,
+    statusCheck: props.statusCheck,
+    avatarCheck: props.avatarCheck,
+  };
 
   const {
     register,
@@ -141,27 +174,42 @@ const SearchForm: React.FC<SearchFormOwnPropsType> = (props) => {
     values,
   });
 
-  const onSubmit: SubmitHandler<FormInputs> = (data: any) =>
-    props.setCurrentPage(1, data.term, data.friend);
+  const onSubmit: SubmitHandler<FormInputs> = (data: DataType) => {
+    props.setCurrentPage(1, data.term, data.friend, data.statusCheck, data.avatarCheck);
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.searchForm}>
-      <input placeholder="Type name" {...register("term", { pattern: /^[A-Za-z0-9]+$/i })} />
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.search}>
+      <input
+        placeholder="Type name"
+        {...register("term", { pattern: /^[A-Za-z0-9]+$/i })}
+        className={styles.textInput}
+      />
       {errors.term && (
         <span style={{ color: "#D10000", fontWeight: "bold" }}>Incorrect symbols.</span>
       )}
-      <input type="checkbox" {...register("friend")} /> Following
-      <input type="submit" value="search" />
-      <input
-        type="submit"
-        value="reset"
-        onClick={() => {
-          reset({
-            term: "",
-            friend: null,
-          });
-        }}
-      />
+      <input type="checkbox" {...register("friend")} className={styles.checkboxType} />
+      <p>Following</p>
+      <input type="checkbox" {...register("statusCheck")} className={styles.checkboxType} />{" "}
+      <p>Status</p>
+      <input type="checkbox" {...register("avatarCheck")} className={styles.checkboxType} />{" "}
+      <p>Avatar</p>
+      <div className={styles.buttons}>
+        <input type="submit" value="search" className={styles.btn} />
+        <input
+          type="submit"
+          value="reset"
+          className={styles.btn}
+          onClick={() => {
+            reset({
+              term: "",
+              friend: null,
+              statusCheck: false,
+              avatarCheck: false,
+            });
+          }}
+        />
+      </div>
     </form>
   );
 };

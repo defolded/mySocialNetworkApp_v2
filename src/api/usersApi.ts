@@ -6,7 +6,7 @@ export const usersAPI = {
     return instance
       .get<GetUsersItems>(
         `users?page=${currentPage}&count=${pageSize}&term=${term}` +
-          (friend === null ? "" : `&friend=${friend}`)
+        (friend === null ? "" : `&friend=${friend}`)
       )
       .then((res) => res.data);
   },

@@ -1,5 +1,5 @@
 import React from "react";
-import { Field, InjectedFormProps, reduxForm } from "redux-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import b from "../.././Button.module.css";
 import { DialogType, MessageType } from "../../redux/messagesReducer";
 import styles from "./Messages.module.css";
@@ -14,14 +14,7 @@ interface PropsType {
   addMessage: (newMessageBody: string) => void;
 }
 
-interface NewMessageFormValuesType {
-  newMessageBody: string;
-}
-
 const Messages: React.FC<PropsType> = (props) => {
-  const addMessage = (values: { newMessageBody: string }) =>
-    props.addMessage(values.newMessageBody);
-
   return (
     <div className={styles.content}>
       <div className={styles.wrapper}>
@@ -36,31 +29,52 @@ const Messages: React.FC<PropsType> = (props) => {
           ))}
         </div>
       </div>
-      {props.isAuth ? <AddMessageFormRedux onSubmit={addMessage} {...props} /> : ""}
+      {props.isAuth ? <AddMessageForm addMessage={props.addMessage} /> : ""}
     </div>
   );
 };
 
-const AddMessageForm: React.FC<
-  InjectedFormProps<NewMessageFormValuesType, PropsType> & PropsType
-> = (props) => {
+type FormInputs = {
+  messageText: string;
+};
+
+interface AddMessageFormOwnPropsType {
+  addMessage: (newMessageBody: string) => void;
+}
+
+const AddMessageForm: React.FC<AddMessageFormOwnPropsType> = (props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormInputs>();
+
+  const onSubmit: SubmitHandler<FormInputs> = (data: any) => props.addMessage(data.messageText);
+
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.searchForm}>
       <div className={b.userInput}>
-        <Field
-          component="textarea"
-          name="newMessageBody"
-          placeholder="Enter your message"
+        <input
+          placeholder="Start typing..."
+          {...register("messageText", { pattern: /^[a-zA-Z0-9_]+( [a-zA-Z0-9_!'.,-\\?]+)*$/i })}
           className={b.text}
         />
-        <button className={b.btn}>Submit</button>
+        <input type="submit" value="Submit" className={b.btn} />
       </div>
+      {errors.messageText && (
+        <span
+          style={{
+            color: "#D10000",
+            fontWeight: "bold",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          Incorrect symbols.
+        </span>
+      )}
     </form>
   );
 };
-
-const AddMessageFormRedux = reduxForm<NewMessageFormValuesType, PropsType>({
-  form: "messagesAddMessageForm",
-})(AddMessageForm);
 
 export default Messages;

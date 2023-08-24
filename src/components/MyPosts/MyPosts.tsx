@@ -1,9 +1,8 @@
-import { Field, InjectedFormProps, reduxForm } from "redux-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import b from "../.././Button.module.css";
-import { required } from "../../utils/validators";
+import { PostType } from "../../redux/postsReducer";
 import styles from "./MyPosts.module.css";
 import MyPost from "./SinglePost/SinglePost";
-import { PostType } from "../../redux/postsReducer";
 
 interface MapStateToPropsType {
   posts: PostType[];
@@ -15,8 +14,6 @@ interface MapDispatchToPropsType {
 }
 
 const MyPosts: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
-  const addPost = (values: any) => props.addPost(values.newPostBody);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.postsList}>
@@ -29,36 +26,52 @@ const MyPosts: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) 
           />
         ))}
       </div>
-      {props.isAuth ? <AddPostReduxForm onSubmit={addPost} /> : ""}
+      {props.isAuth ? <AddPostForm addPost={props.addPost} /> : ""}
     </div>
   );
 };
 
-type AddPostFormValuesType = {};
+type FormInputs = {
+  postText: string;
+};
 
-interface AddPostOwnPropsType {}
+interface AddPostFormOwnPropsType {
+  addPost: (t: string) => void;
+}
 
-const AddPostForm: React.FC<
-  InjectedFormProps<AddPostFormValuesType, AddPostOwnPropsType> & AddPostOwnPropsType
-> = (props) => {
+const AddPostForm: React.FC<AddPostFormOwnPropsType> = (props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormInputs>();
+
+  const onSubmit: SubmitHandler<FormInputs> = (data: any) => props.addPost(data.postText);
+
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.searchForm}>
       <div className={b.userInput}>
-        <Field
-          component="textarea"
-          name="newPostBody"
-          placeholder="Enter your post"
-          validate={required}
+        <input
+          placeholder="Share your thoughts..."
+          {...register("postText", { pattern: /^[a-zA-Z0-9_]+( [a-zA-Z0-9_!'.,-\\?]+)*$/i })}
           className={b.text}
         />
-        <button className={b.btn}>Submit</button>
+        <input type="submit" value="Submit" className={b.btn} />
       </div>
+      {errors.postText && (
+        <span
+          style={{
+            color: "#D10000",
+            fontWeight: "bold",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          Incorrect symbols.
+        </span>
+      )}
     </form>
   );
 };
-
-const AddPostReduxForm = reduxForm<AddPostFormValuesType, AddPostOwnPropsType>({
-  form: "postAddPostForm",
-})(AddPostForm);
 
 export default MyPosts;

@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { AppStateType } from "../../redux/redux-store";
 import { follow, getUsers, unfollow } from "../../redux/usersReducer";
-import { UserType } from "../../types/types";
+import { GetUsersDataType } from "../../types/types";
 import Users from "./Users";
 
 interface MapStateToPropsType {
-  users: UserType[];
+  users: GetUsersDataType[];
   pageSize: number;
   totalUsersCount: number;
   page: number;
@@ -18,7 +18,14 @@ interface MapStateToPropsType {
 }
 
 interface MapDispatchToPropsType {
-  getUsers: (page: number, pageSize: number, term: string, friend: null | boolean) => void;
+  getUsers: (
+    page: number,
+    pageSize: number,
+    term: string,
+    friend: null | boolean,
+    statusCheck: boolean,
+    avatarCheck: boolean
+  ) => void;
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
 }
@@ -29,11 +36,17 @@ type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType;
 
 class UsersAPIComponent extends React.Component<PropsType> {
   componentDidMount() {
-    this.props.getUsers(this.props.page, this.props.pageSize, "", null);
+    this.props.getUsers(this.props.page, this.props.pageSize, "", null, false, false);
   }
 
-  setCurrentPage = (page: number = 1, term: string = "", friend: boolean | null = null) => {
-    this.props.getUsers(page, this.props.pageSize, term, friend);
+  setCurrentPage = (
+    page: number = 1,
+    term: string = "",
+    friend: boolean | null = null,
+    statusCheck: boolean,
+    avatarCheck: boolean
+  ) => {
+    this.props.getUsers(page, this.props.pageSize, term, friend, statusCheck, avatarCheck);
   };
 
   render() {

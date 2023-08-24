@@ -7,8 +7,16 @@ interface PropsType {
   page: number;
   term: string;
   friend: boolean | null;
+  statusCheck: boolean;
+  avatarCheck: boolean;
 
-  setCurrentPage: (page: number, term: string, friend: boolean | null) => void;
+  setCurrentPage: (
+    page: number,
+    term: string,
+    friend: boolean | null,
+    statusCheck: boolean,
+    avatarCheck: boolean
+  ) => void;
 }
 
 const Paginator: React.FC<PropsType> = (props) => {
@@ -43,7 +51,13 @@ const Paginator: React.FC<PropsType> = (props) => {
               <span
                 className={props.page === p ? styles.active : ""}
                 onClick={() => {
-                  props.setCurrentPage(p, props.term, props.friend);
+                  props.setCurrentPage(
+                    p,
+                    props.term,
+                    props.friend,
+                    props.statusCheck,
+                    props.avatarCheck
+                  );
                 }}
                 key={crypto.randomUUID()}
               >

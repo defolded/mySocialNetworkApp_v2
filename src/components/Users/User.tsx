@@ -10,13 +10,13 @@ interface PropsType {
   username: string;
   isFollowed: any;
   isFetching: number[];
-  message: string;
+  message: string | null;
 
   unfollowUser: (u: number) => void;
   followUser: (u: number) => void;
 }
 
-const User: React.FC<PropsType> = (props) => {
+const User: React.FC<PropsType> = React.memo((props) => {
   if (props.isFetchingUsersPage) {
     return <Preloader />;
   }
@@ -51,6 +51,6 @@ const User: React.FC<PropsType> = (props) => {
       <p>{props.message}</p>
     </div>
   );
-};
+});
 
 export default User;
