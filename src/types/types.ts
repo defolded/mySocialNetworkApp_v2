@@ -24,14 +24,11 @@ export interface PhotosType {
   large: string | null;
 }
 
-export interface UserType {
+export interface GetUsersDataType {
+  followed: boolean;
   id: number;
   name: string;
-  status: string;
   photos: PhotosType;
-  username?: null | string;
-  profilePicture?: null | string;
-  isFollowed?: null | boolean;
-  message?: null | string;
-  followed?: null | string;
+  status: string | null;
+  uniqueUrlName: string | null;
 }
