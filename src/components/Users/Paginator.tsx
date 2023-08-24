@@ -45,7 +45,7 @@ const Paginator: React.FC<PropsType> = (props) => {
                 onClick={() => {
                   props.setCurrentPage(p, props.term, props.friend);
                 }}
-                key={p}
+                key={crypto.randomUUID()}
               >
                 {p}
               </span>

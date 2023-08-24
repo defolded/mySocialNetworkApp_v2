@@ -13,6 +13,7 @@ import UsersContainer from "./components/Users/UsersContainer";
 import Preloader from "./components/common/Preloader/Preloader";
 import { initializeApp } from "./redux/appReducer";
 import { AppStateType } from "./redux/redux-store";
+import ChatPage from "./pages/Chat/ChatPage";
 
 type MapPropsType = ReturnType<typeof mapStateToProps>;
 
@@ -49,6 +50,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                   element={<ProfileContainer state={this.props.state} />}
                 />
                 <Route path="/login" element={<LoginContainer state={this.props.state} />} />
+                <Route path="/chat" element={<ChatPage />} />
               </Routes>
             </div>
           </div>

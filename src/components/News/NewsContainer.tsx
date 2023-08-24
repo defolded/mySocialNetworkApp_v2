@@ -6,13 +6,13 @@ import { AppStateType } from "../../redux/redux-store";
 import News from "./News";
 
 interface PropsType {
-  isFetching: boolean
-  articles: ArticlesResponseType[]
+  isFetching: boolean;
+  articles: ArticlesResponseType[];
 
-  getArticles: () => {}
+  getArticles: () => {};
 }
 
-const NewsContainer:React.FC<PropsType> = (props) => {
+const NewsContainer: React.FC<PropsType> = (props) => {
   useEffect(() => {
     props.getArticles();
   }, []);
@@ -31,6 +31,4 @@ let mapStateToProps = (state: AppStateType) => {
   };
 };
 
-export default compose<any>(connect(mapStateToProps, { getArticles }))(
-  NewsContainer
-);
+export default compose<any>(connect(mapStateToProps, { getArticles }))(NewsContainer);

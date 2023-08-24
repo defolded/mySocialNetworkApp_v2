@@ -1,8 +1,9 @@
-import { Action, applyMiddleware, combineReducers, createStore } from "redux";
+import { Action, applyMiddleware, combineReducers, legacy_createStore } from "redux";
 import { reducer as formReducer } from "redux-form";
 import thunkMiddleware, { ThunkAction } from "redux-thunk";
 import appReducer from "./appReducer";
 import authReducer from "./authReducer";
+import chatReducer from "./chatReducer";
 import messagesReducer from "./messagesReducer";
 import newsReducer from "./newsReducer";
 import postsReducer from "./postsReducer";
@@ -17,6 +18,7 @@ let reducers = combineReducers({
   app: appReducer,
   profile: profileReducer,
   news: newsReducer,
+  chat: chatReducer,
   form: formReducer,
 });
 
@@ -36,7 +38,7 @@ export type ThunkTypeProto<A extends Action, R = Promise<void>> = ThunkAction<
   A
 >;
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+let store = legacy_createStore(reducers, applyMiddleware(thunkMiddleware));
 // @ts-ignore
 window.state = store;
 

@@ -27,12 +27,12 @@ const Messages: React.FC<PropsType> = (props) => {
       <div className={styles.wrapper}>
         <div className={styles.dialogs}>
           {props.dialogs.map((p) => (
-            <Person id={p.id} name={p.name} key={p.id} />
+            <Person id={p.id} name={p.name} key={crypto.randomUUID()} />
           ))}
         </div>
         <div className={styles.messages}>
           {props.messages.map((m) => (
-            <MyMessage text={m.message} key={m.id} />
+            <MyMessage text={m.message} key={crypto.randomUUID()} />
           ))}
         </div>
       </div>

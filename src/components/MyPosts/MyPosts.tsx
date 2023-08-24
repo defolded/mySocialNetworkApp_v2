@@ -25,7 +25,7 @@ const MyPosts: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) 
             profilePicture={p.profilePicture}
             username={p.username}
             text={p.message}
-            key={p.id}
+            key={crypto.randomUUID()}
           />
         ))}
       </div>

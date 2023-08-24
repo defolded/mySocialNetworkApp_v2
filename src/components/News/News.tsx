@@ -4,11 +4,11 @@ import Preloader from "../common/Preloader/Preloader";
 import { ArticlesResponseType } from "../../redux/newsReducer";
 
 interface PropsType {
-  isFetching: boolean
-  articles: ArticlesResponseType[]
+  isFetching: boolean;
+  articles: ArticlesResponseType[];
 }
 
-const News:React.FC<PropsType> = (props) => {
+const News: React.FC<PropsType> = (props) => {
   if (props.isFetching) {
     return <Preloader />;
   }
@@ -22,6 +22,7 @@ const News:React.FC<PropsType> = (props) => {
             title={newEntry.title}
             description={newEntry.description}
             url={newEntry.url}
+            key={crypto.randomUUID()}
           />
         );
       })}

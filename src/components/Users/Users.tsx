@@ -107,7 +107,7 @@ const Users: React.FC<PropsType> = (props) => {
             unfollowUser={unfollowUser}
             userId={user.id}
             isFetching={props.isFetching}
-            key={user.id}
+            key={crypto.randomUUID()}
             isFetchingUsersPage={props.isFetchingUsersPage}
           />
         ))}
@@ -151,7 +151,7 @@ const SearchForm: React.FC<SearchFormOwnPropsType> = (props) => {
         <span style={{ color: "#D10000", fontWeight: "bold" }}>Incorrect symbols.</span>
       )}
       <input type="checkbox" {...register("friend")} /> Following
-      <input type="submit" />
+      <input type="submit" value="search" />
       <input
         type="submit"
         value="reset"

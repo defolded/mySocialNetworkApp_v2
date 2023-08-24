@@ -44,7 +44,12 @@ const ProfileInfo = (props: PropsType & StateType) => {
         </div>
       ) : (
         <div>
-          <input autoFocus onBlur={deactivateEditMode} value={status} onChange={onStatusChange} />
+          <input
+            autoFocus
+            onBlur={deactivateEditMode}
+            value={status ? status : ""}
+            onChange={onStatusChange}
+          />
         </div>
       )}
     </div>

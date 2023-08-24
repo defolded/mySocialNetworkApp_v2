@@ -22,7 +22,7 @@ const User: React.FC<PropsType> = (props) => {
   }
 
   return (
-    <div className={styles.container} key={props.userId}>
+    <div className={styles.container} key={crypto.randomUUID()}>
       <NavLink to={`/users/${props.userId}`}>
         <img src={props.profilePicture} height="80" width="80" alt="profile" />
       </NavLink>
