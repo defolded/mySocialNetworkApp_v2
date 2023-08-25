@@ -1,6 +1,7 @@
 .container {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   padding: 18px;
   height: 12vmax;
   margin-bottom: 40px;
@@ -37,4 +38,10 @@
 
 .text {
   margin-top: 0;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    font-size: small;
+  }
 }

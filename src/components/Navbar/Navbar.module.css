@@ -95,10 +95,13 @@
 @media screen and (max-width: 512px) {
   .nav {
     padding-right: 0;
+    max-width: 100dvh;
   }
 
   .wrapper {
-    font-size: small;
+    position: relative;
+    margin-top: 0;
+    font-size: large;
     font-weight: 300;
   }
 
