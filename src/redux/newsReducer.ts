@@ -30,7 +30,7 @@ const newsReducer = (state = initialState, action: ActionTypes): InitialStateTyp
         ...state,
         articles: action.articles,
       };
-    case "TOGGLE-ISFETCHING":
+    case "SN/NEWS/TOGGLE-ISFETCHING":
       return {
         ...state,
         isFetching: action.state,
@@ -43,7 +43,7 @@ const newsReducer = (state = initialState, action: ActionTypes): InitialStateTyp
 export const actions = {
   getArticlesSuccess: (articles: ArticlesResponseType[]) =>
     ({ type: "SN/NEWS/GET-ARTICLES", articles } as const),
-  toggleIsFetching: (state: boolean) => ({ type: "TOGGLE-ISFETCHING", state } as const),
+  toggleIsFetching: (state: boolean) => ({ type: "SN/NEWS/TOGGLE-ISFETCHING", state } as const),
 };
 
 export const getArticles = (): ThunkTypeProto<ActionTypes> => async (dispatch) => {

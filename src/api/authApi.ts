@@ -1,3 +1,4 @@
+import { actions } from "../redux/messagesReducer";
 import { ResponseType, ResultCodeEnum, ResultCodeForCaptchaEnum, instance } from "./api";
 
 interface GetAuthUserDataType {
@@ -31,6 +32,8 @@ export const authAPI = {
     );
   },
   logout() {
+    actions.setDialogUsersSuccess([]);
+    actions.setMessagesSuccess([]);
     return instance.delete(`auth/login`);
   },
 };

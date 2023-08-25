@@ -27,3 +27,9 @@ export type GetUsersItems = {
   totalCount: number;
   error: string | null;
 };
+
+export type GetUserMessages = {
+  items: any[];
+  totalCount: number;
+  error: string | null;
+}

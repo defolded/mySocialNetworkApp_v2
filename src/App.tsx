@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { compose } from "redux";
 import "./App.css";
 import LoginContainer from "./components/Login/LoginContainer";
-import MessagesContainer from "./components/Messages/MessagesContainer";
+import Messages from "./components/Messages/Messages";
 import MyPostsContainer from "./components/MyPosts/MyPostsContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import NewsContainer from "./components/News/NewsContainer";
@@ -39,10 +39,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
             <div className="Wrapper">
               <Routes>
                 <Route path="/posts" element={<MyPostsContainer state={this.props.state} />} />
-                <Route
-                  path="/messages/*"
-                  element={<MessagesContainer state={this.props.state} />}
-                />
+                <Route path="/messages/:userId?" element={<Messages />} />
                 <Route path="/news" element={<NewsContainer state={this.props.state} />} />
                 <Route path="/users" element={<UsersContainer state={this.props.state} />} />
                 <Route

@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import b from "../.././Button.module.css";
+import { sendMessage, setDialogUsers } from "../../redux/messagesReducer";
 import { AppStateType } from "../../redux/redux-store";
 import styles from "./Messages.module.css";
 import MyMessage from "./MyMessage/MyMessage";
 import Person from "./Person/Person";
 
-const Messages: React.FC<{ addMessage: (newMessageBody: string) => void }> = ({ addMessage }) => {
+const Messages: React.FC = () => {
   const messages = useSelector((state: AppStateType) => state.messages.messages);
   const dialogs = useSelector((state: AppStateType) => state.messages.dialogs);
   const isAuth = useSelector((state: AppStateType) => state.auth.isAuth);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch<any>(setDialogUsers());
+  }, []);
+
+  if (dialogs.length < 0 || !isAuth) return <div>No followed users to chat with.</div>;
 
   return (
     <div className={styles.content}>
@@ -21,12 +31,14 @@ const Messages: React.FC<{ addMessage: (newMessageBody: string) => void }> = ({ 
           ))}
         </div>
         <div className={styles.messages}>
-          {messages.map((m) => (
-            <MyMessage text={m.message} key={crypto.randomUUID()} />
-          ))}
+          <div className={styles.texts}>
+            {messages.map((m) => (
+              <MyMessage text={m.body} key={crypto.randomUUID()} />
+            ))}
+          </div>
+          {dialogs.length > 0 && <AddMessageForm />}
         </div>
       </div>
-      {isAuth ? <AddMessageForm addMessage={addMessage} /> : ""}
     </div>
   );
 };
@@ -35,18 +47,21 @@ type FormInputs = {
   messageText: string;
 };
 
-interface AddMessageFormOwnPropsType {
-  addMessage: (newMessageBody: string) => void;
-}
-
-const AddMessageForm: React.FC<AddMessageFormOwnPropsType> = (props) => {
+const AddMessageForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormInputs>();
 
-  const onSubmit: SubmitHandler<FormInputs> = (data: any) => props.addMessage(data.messageText);
+  const dispatch = useDispatch();
+
+  const onSubmit: SubmitHandler<FormInputs> = (data: any) =>
+    // @ts-ignore
+    dispatch<any>(sendMessage(params, data.messageText));
+
+  let { userId } = useParams();
+  let params = Number(userId);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.searchForm}>

@@ -5,8 +5,46 @@
 
 .wrapper {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .dialogs {
   margin-right: 1.5em;
+}
+
+.dialogs a {
+  font-weight: 500;
+  text-decoration: none;
+  color: rgb(63, 63, 63);
+}
+
+.dialogs a:hover {
+  text-decoration: underline;
+}
+
+.dialogs a:active {
+  text-decoration: underline;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 50%;
+}
+
+@media screen and (max-width: 800px) {
+  .dialogs {
+    margin-bottom: 25px;
+  }
+  .messages {
+    align-items: center;
+    width: inherit;
+  }
+  .texts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 75%;
+  }
 }

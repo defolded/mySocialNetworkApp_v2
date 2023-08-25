@@ -181,7 +181,7 @@ const SearchForm: React.FC<SearchFormOwnPropsType> = (props) => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.search}>
       <input
         placeholder="Type name"
-        {...register("term", { pattern: /^[A-Za-z0-9]+$/i })}
+        {...register("term", { pattern: /^[a-zA-Z0-9_]+( [a-zA-Z0-9_!'.,-\\?]+)*$/i })}
         className={styles.textInput}
       />
       {errors.term && (
