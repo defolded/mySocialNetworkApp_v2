@@ -8,7 +8,6 @@ import { GetUsersDataType } from "../../types/types";
 import Paginator from "./Paginator";
 import User from "./User";
 import styles from "./Users.module.css";
-import b from "../.././Button.module.css";
 
 interface PropsType {
   page: number;

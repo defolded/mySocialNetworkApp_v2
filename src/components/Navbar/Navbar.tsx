@@ -56,17 +56,6 @@ const Navbar: React.FC<PropsType> = (props) => {
               News
             </NavLink>
             <NavLink
-              to={"music"}
-              style={({ isActive, isPending }) => {
-                return {
-                  opacity: isActive ? 100 : "",
-                  color: isPending ? "red" : "black",
-                };
-              }}
-            >
-              Music
-            </NavLink>
-            <NavLink
               to={"chat"}
               style={({ isActive, isPending }) => {
                 return {

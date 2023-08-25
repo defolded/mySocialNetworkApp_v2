@@ -1,14 +1,6 @@
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { AppStateType } from "../../redux/redux-store";
-import MyPosts from "./MyPosts";
 import { actions } from "../../redux/postsReducer";
+import MyPosts from "./MyPosts";
 
-let mapStateToProps = (state: AppStateType) => {
-  return {
-    posts: state.posts.posts,
-    isAuth: state.auth.isAuth,
-  };
-};
-
-export default compose<any>(connect(mapStateToProps, { addPost: actions.addPost }))(MyPosts);
+export default compose<any>(connect(null, { addPost: actions.addPost }))(MyPosts);

@@ -1,23 +1,18 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import b from "../.././Button.module.css";
-import { PostType } from "../../redux/postsReducer";
+import { AppStateType } from "../../redux/redux-store";
 import styles from "./MyPosts.module.css";
 import MyPost from "./SinglePost/SinglePost";
 
-interface MapStateToPropsType {
-  posts: PostType[];
-  isAuth: boolean;
-}
+const MyPosts: React.FC<{ addPost: (t: string) => void }> = ({ addPost }) => {
+  const posts = useSelector((state: AppStateType) => state.posts.posts);
+  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth);
 
-interface MapDispatchToPropsType {
-  addPost: (t: string) => void;
-}
-
-const MyPosts: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.postsList}>
-        {props.posts.map((p) => (
+        {posts.map((p) => (
           <MyPost
             profilePicture={p.profilePicture}
             username={p.username}
@@ -26,7 +21,7 @@ const MyPosts: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) 
           />
         ))}
       </div>
-      {props.isAuth ? <AddPostForm addPost={props.addPost} /> : ""}
+      {isAuth ? <AddPostForm addPost={addPost} /> : ""}
     </div>
   );
 };
@@ -55,6 +50,7 @@ const AddPostForm: React.FC<AddPostFormOwnPropsType> = (props) => {
           placeholder="Share your thoughts..."
           {...register("postText", { pattern: /^[a-zA-Z0-9_]+( [a-zA-Z0-9_!'.,-\\?]+)*$/i })}
           className={b.text}
+          style={{ padding: "10px" }}
         />
         <input type="submit" value="Submit" className={b.btn} />
       </div>

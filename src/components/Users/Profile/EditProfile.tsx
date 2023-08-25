@@ -27,12 +27,12 @@ const EditProfile: React.FC<
       <div className={styles.editContainer}>
         <button className={styles.editBtn}>Save</button>
         {props.error && <h3>{props.error}</h3>}
-        {/* <button className={styles.editBtn}>Exit</button> */}
       </div>
       <div className={styles.headingContainer}>
         <img src={props.userPhotoLarge} alt="user" />
         <input type="file" onChange={onPhotoUpload} />
         <div className={styles.fullName}>
+          Change about me:
           <Field placeholder="Name" name="fullName" component="input" />
           <div>
             <Field name="lookingForAJob" component="input" type="checkbox" />

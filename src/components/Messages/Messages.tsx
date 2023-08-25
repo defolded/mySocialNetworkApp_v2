@@ -1,35 +1,32 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import b from "../.././Button.module.css";
-import { DialogType, MessageType } from "../../redux/messagesReducer";
+import { AppStateType } from "../../redux/redux-store";
 import styles from "./Messages.module.css";
 import MyMessage from "./MyMessage/MyMessage";
 import Person from "./Person/Person";
 
-interface PropsType {
-  isAuth: boolean;
-  dialogs: DialogType[];
-  messages: MessageType[];
+const Messages: React.FC<{ addMessage: (newMessageBody: string) => void }> = ({ addMessage }) => {
+  const messages = useSelector((state: AppStateType) => state.messages.messages);
+  const dialogs = useSelector((state: AppStateType) => state.messages.dialogs);
+  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth);
 
-  addMessage: (newMessageBody: string) => void;
-}
-
-const Messages: React.FC<PropsType> = (props) => {
   return (
     <div className={styles.content}>
       <div className={styles.wrapper}>
         <div className={styles.dialogs}>
-          {props.dialogs.map((p) => (
+          {dialogs.map((p) => (
             <Person id={p.id} name={p.name} key={crypto.randomUUID()} />
           ))}
         </div>
         <div className={styles.messages}>
-          {props.messages.map((m) => (
+          {messages.map((m) => (
             <MyMessage text={m.message} key={crypto.randomUUID()} />
           ))}
         </div>
       </div>
-      {props.isAuth ? <AddMessageForm addMessage={props.addMessage} /> : ""}
+      {isAuth ? <AddMessageForm addMessage={addMessage} /> : ""}
     </div>
   );
 };
@@ -58,6 +55,7 @@ const AddMessageForm: React.FC<AddMessageFormOwnPropsType> = (props) => {
           placeholder="Start typing..."
           {...register("messageText", { pattern: /^[a-zA-Z0-9_]+( [a-zA-Z0-9_!'.,-\\?]+)*$/i })}
           className={b.text}
+          style={{ padding: "10px" }}
         />
         <input type="submit" value="Submit" className={b.btn} />
       </div>
