@@ -2,7 +2,7 @@
 
 ### Live Demo
 
-**WEBSITE IS LIVE ON [https://defolded-advanced-social-network-app.netlify.app/](https://defolded-advanced-social-network-app.netlify.app/)**
+**WEBSITE IS LIVE AT [https://defolded-advanced-social-network-app.netlify.app/](https://defolded-advanced-social-network-app.netlify.app/)**
 
  **Test credentials for login:**
  
