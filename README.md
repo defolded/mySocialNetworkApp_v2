@@ -15,6 +15,10 @@ Password:
 free
 ```
 
+<hr />
+
+![Screen Recording 2023-11-26 at 12 58 04 PM](https://github.com/defolded/mySocialNetworkApp_v2/assets/78711414/13698206-72b3-41b0-8eb0-14d5e337de4d)
+
 
 ## Getting Started 🚀
 
